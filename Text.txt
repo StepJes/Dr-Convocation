@@ -1,0 +1,444 @@
+Update the existing Dr. Esha Mugutmal portfolio website.
+
+IMPORTANT:
+The website has already been built using:
+
+* HTML5
+* CSS3
+* Vanilla JavaScript
+
+DO NOT migrate the project to React, Next.js, Tailwind, Bootstrap, or any other framework.
+
+Preserve the existing design, structure, responsiveness, and functionality unless specifically changed by this prompt.
+
+============================================================
+NEW CONTENT SOURCE
+==================
+
+Dr. Esha Mugutmal has an Instagram profile containing content she has personally created:
+
+https://www.instagram.com/stethoherb/
+
+This Instagram profile should now be treated as an additional source of professional/content information for the portfolio.
+
+The content on this profile can help communicate:
+
+* Her medical interests
+* Her educational content
+* Topics she discusses
+* Her communication style
+* Her public-facing medical content
+* Her interest in healthcare education
+* Her professional identity
+
+============================================================
+FIRST: INSPECT THE INSTAGRAM PROFILE
+====================================
+
+Before changing the website:
+
+1. Attempt to access the Instagram profile.
+2. Inspect the publicly available profile information.
+3. Review the available posts/Reels that can be accessed.
+4. Identify content that is clearly created by Dr. Esha.
+5. Look for recurring medical/educational themes.
+6. Identify a small number of the strongest and most relevant Reels/posts.
+
+IMPORTANT:
+
+Instagram may restrict automated access.
+
+If the profile or individual posts cannot be accessed:
+
+* Do NOT fabricate information.
+* Do NOT guess what the Reels contain.
+* Do NOT invent Reel titles.
+* Do NOT invent medical topics.
+* Do NOT create fake descriptions.
+
+Instead, preserve the website and create the section using only information that can actually be verified.
+
+============================================================
+NEW SECTION: CONTENT & EDUCATION
+================================
+
+Add a new section to the portfolio:
+
+"Medical Content & Education"
+
+Alternative heading if it fits the existing design better:
+
+"Sharing Medical Knowledge"
+
+The purpose of this section is to show that Dr. Esha is not only building her medical career but also creates public-facing educational content.
+
+This section should feel like a natural extension of her professional profile.
+
+Do NOT make it look like an Instagram feed.
+
+It should remain a doctor's portfolio.
+
+============================================================
+CONTENT INTRODUCTION
+====================
+
+Create a short introduction based ONLY on the content actually found on the Instagram profile.
+
+The copy should explain that Dr. Esha shares educational/medical content through her social presence.
+
+Do not make unsupported claims such as:
+
+"medical educator"
+
+"healthcare expert"
+
+"leading medical creator"
+
+"trusted medical influencer"
+
+unless the available content genuinely supports that wording.
+
+Use restrained professional language.
+
+============================================================
+FEATURED REELS
+==============
+
+If publicly accessible Instagram Reels can be identified, feature approximately:
+
+3–6 of the strongest pieces of content.
+
+Do NOT try to display every Reel.
+
+The goal is curation.
+
+Prioritize Reels that:
+
+* Are clearly created by Dr. Esha
+* Have useful educational content
+* Represent her medical interests
+* Are relevant to Gynaecology or healthcare
+* Look professionally presented
+* Help a visitor understand her public-facing medical interests
+
+============================================================
+REEL CARD DESIGN
+================
+
+Create elegant Reel cards.
+
+Each card can contain:
+
+* Thumbnail / preview
+* Topic/title
+* Short description
+* Instagram icon
+* "Watch on Instagram" button
+
+Do NOT create fake thumbnails.
+
+If Instagram provides an accessible embed or preview, use it appropriately.
+
+If local thumbnails can legally and reliably be obtained and the user has permission to use them, they may be stored locally in:
+
+assets/
+
+Otherwise, prefer linking to the original Instagram Reel rather than copying its media.
+
+============================================================
+IMPORTANT: DO NOT BREAK THE LOCAL-ASSETS RULE
+=============================================
+
+The existing website has a strict local-assets rule.
+
+The Dr. Esha profile photograph is already stored locally in:
+
+assets/
+
+Continue using that image.
+
+For any new images:
+
+Do NOT download random images from the internet.
+
+Do NOT use stock images.
+
+Do NOT use Unsplash.
+
+Do NOT use Pexels.
+
+Do NOT use remote medical stock photography.
+
+For Instagram content, prefer:
+
+1. Official Instagram embed/link where appropriate
+2. Local assets only if the media can legitimately be stored locally
+3. Text-based Reel cards linking back to Instagram if media cannot be locally stored
+
+Do not secretly introduce external image URLs just to make the section look better.
+
+============================================================
+INSTAGRAM LINKS
+===============
+
+Add a tasteful Instagram CTA.
+
+Example:
+
+"Follow Dr. Esha on Instagram"
+
+Link:
+
+https://www.instagram.com/stethoherb/
+
+The link must open Instagram appropriately.
+
+Use:
+
+target="_blank"
+
+and:
+
+rel="noopener noreferrer"
+
+where appropriate.
+
+Do not create fake social links.
+
+============================================================
+NAVIGATION UPDATE
+=================
+
+Add the new section to the navigation.
+
+Suggested:
+
+Home
+About
+Education
+Gynaecology
+Journey
+Content
+Contact
+
+Keep the navigation clean.
+
+On mobile, ensure the new item fits correctly within the existing mobile menu.
+
+============================================================
+WHERE TO PLACE THE SECTION
+==========================
+
+Do not put the Instagram section immediately after the Hero.
+
+The professional profile should remain the primary focus.
+
+Recommended order:
+
+Hero
+
+About
+
+Education & Medical Journey
+
+Gynaecology Focus
+
+Career Progression
+
+Medical Content & Education
+
+Graduation Milestone
+
+Closing
+
+Footer
+
+The portfolio should tell this story:
+
+Who she is
+↓
+What she studied
+↓
+Where her medical journey is going
+↓
+What she is interested in
+↓
+How she communicates medical information publicly
+↓
+What's next
+
+============================================================
+CONTENT ACCURACY
+================
+
+Treat Instagram content as supplementary evidence, not as permission to invent credentials.
+
+For example:
+
+If her Reels discuss a particular medical topic, you may say:
+
+"Dr. Esha creates educational content around [verified topic]."
+
+Do NOT turn that into:
+
+"Dr. Esha specializes in [topic]."
+
+Those are completely different claims.
+
+A Reel about PCOS does not automatically mean she specializes in PCOS.
+
+A Reel about pregnancy does not automatically mean she is an obstetrician.
+
+A Reel about skincare does not automatically mean she specializes in dermatology.
+
+A Reel about nutrition does not automatically make her a nutritionist.
+
+Be extremely careful about this distinction.
+
+============================================================
+MEDICAL DISCLAIMER
+==================
+
+Because this is a medical professional's public portfolio and her social content may be educational, consider adding a very subtle disclaimer near the content section or footer if appropriate:
+
+"Content shared for general educational purposes and not a substitute for professional medical advice."
+
+Do not make the disclaimer visually dominant.
+
+Do not imply that every piece of content constitutes medical advice.
+
+============================================================
+DESIGN
+======
+
+The new section must visually match the existing portfolio.
+
+Do NOT suddenly introduce:
+
+* Instagram-style gradients
+* Neon pink/purple
+* Social-media-heavy UI
+* Excessive cards
+* Huge Instagram logos
+* Influencer aesthetics
+
+Maintain:
+
+* Medical professionalism
+* Warm neutral backgrounds
+* Navy/teal/medical-green palette
+* Elegant typography
+* Subtle borders
+* Minimal shadows
+* Generous whitespace
+
+The Instagram content should feel like part of the doctor's professional identity.
+
+============================================================
+REEL INTERACTION
+================
+
+If using simple Reel cards:
+
+Hover:
+
+* Slight image movement
+* Subtle elevation
+* CTA transition
+
+Do not over-animate.
+
+On mobile:
+
+Cards should stack cleanly.
+
+If using embedded Instagram content, ensure:
+
+* It does not create horizontal overflow
+* It does not break the page width
+* It remains usable on mobile
+* It does not dominate the entire page
+
+============================================================
+OPTIONAL: FEATURED CONTENT HIGHLIGHT
+====================================
+
+If one Reel is clearly stronger or more representative than the others, create one larger:
+
+"Featured"
+
+content block.
+
+Then show 2–4 smaller Reel cards beside/below it.
+
+This is preferred over displaying six identical cards.
+
+The design should feel curated.
+
+============================================================
+INSTAGRAM PROFILE LINK
+======================
+
+Create a subtle section CTA:
+
+"View all content on Instagram"
+
+Link to:
+
+https://www.instagram.com/stethoherb/
+
+Do not attempt to recreate Instagram functionality.
+
+Do not implement:
+
+* Likes
+* Comments
+* Followers
+* Follow button functionality
+* Stories
+* Instagram login
+* Infinite feed
+* Fake engagement counts
+
+============================================================
+SEO
+===
+
+Update the page metadata only if it genuinely improves the description.
+
+Do not stuff Instagram keywords into the page.
+
+The website remains primarily a professional medical portfolio.
+
+============================================================
+FINAL VALIDATION
+================
+
+After implementing the new section:
+
+Check:
+
+1. Existing Hero still works.
+2. Dr. Esha's actual local photograph is still used.
+3. No external stock images were introduced.
+4. Instagram link works.
+5. Reel links work where available.
+6. No fabricated Reel titles/topics were added.
+7. No unsupported medical specialization claims were added.
+8. Navigation includes the new section.
+9. Mobile navigation works.
+10. Reel cards are responsive.
+11. No horizontal overflow exists.
+12. No console errors exist.
+13. The website still feels like a doctor's portfolio.
+14. Instagram content complements the professional profile rather than taking over the website.
+
+IMPORTANT FINAL RULE:
+
+If Instagram cannot be accessed or its content cannot be reliably inspected, DO NOT GUESS.
+
+In that case, create the section structure and use only verified information, or leave the section minimal until actual Reel information is available.
+
+Accuracy is more important than filling the section.
+
+Implement this update now while preserving everything that already works.

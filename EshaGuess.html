@@ -1,0 +1,574 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#eee5d3" />
+  <title>A Curious Medical Inquiry</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --paper: #f7f0df;
+      --paper-dark: #e9dcc1;
+      --ink: #343e32;
+      --sage: #66785b;
+      --sage-dark: #485a42;
+      --sage-light: #dce0cd;
+      --burgundy: #864d4b;
+      --burgundy-light: #ead8cf;
+      --muted: #89816d;
+      --border: #d6c7a9;
+      --white: #fffaf0;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: rgba(102, 120, 91, 0.28);
+    }
+
+    body {
+      margin: 0;
+      padding: 30px;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #e8e0d0;
+      background-image:
+        radial-gradient(ellipse at 15% 20%, rgba(255,255,255,0.5), transparent 45%),
+        radial-gradient(ellipse at 85% 80%, rgba(151,133,100,0.13), transparent 45%),
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 3px,
+          rgba(115, 98, 69, 0.025) 4px
+        );
+      color: var(--ink);
+      font-family: "Libre Baskerville", Georgia, serif;
+    }
+
+    .panel {
+      position: relative;
+      width: 680px;
+      max-width: 100%;
+      min-height: 340px;
+      padding: 43px 44px 36px;
+      overflow: hidden;
+      background-color: var(--paper);
+      background-image:
+        radial-gradient(ellipse at 12% 10%, rgba(255,255,255,0.7), transparent 55%),
+        repeating-linear-gradient(
+          45deg,
+          transparent,
+          transparent 7px,
+          rgba(135, 115, 78, 0.025) 8px
+        );
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      box-shadow:
+        0 3px 0 rgba(113, 91, 59, 0.08),
+        0 16px 45px rgba(65, 57, 40, 0.14),
+        inset 0 0 0 6px rgba(255, 250, 240, 0.5),
+        inset 0 0 0 7px rgba(183, 163, 125, 0.22);
+      transition: transform 0.3s ease;
+    }
+
+    /* Decorative antique border */
+
+    .panel::before {
+      content: "";
+      position: absolute;
+      inset: 15px;
+      border: 1px solid rgba(166, 146, 109, 0.32);
+      pointer-events: none;
+    }
+
+    .panel::after {
+      content: "✦";
+      position: absolute;
+      right: 25px;
+      bottom: 16px;
+      color: #b6a27b;
+      font-size: 16px;
+      opacity: 0.7;
+    }
+
+    .content {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Subtle apothecary-style decorative elements */
+
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .blob.green {
+      width: 200px;
+      height: 200px;
+      top: -115px;
+      right: -65px;
+      background: rgba(123, 140, 103, 0.13);
+      border: 1px solid rgba(102, 120, 91, 0.12);
+    }
+
+    .blob.blue {
+      width: 130px;
+      height: 130px;
+      right: 24px;
+      bottom: -80px;
+      background: rgba(134, 77, 75, 0.07);
+      border: 1px solid rgba(134, 77, 75, 0.12);
+    }
+
+    .cross {
+      position: absolute;
+      z-index: 1;
+      color: var(--sage);
+      font-family: Georgia, serif;
+      font-size: 32px;
+      font-weight: 400;
+      opacity: 0.38;
+      pointer-events: none;
+    }
+
+    .cross.one {
+      top: 30px;
+      right: 54px;
+      transform: rotate(45deg);
+    }
+
+    .cross.two {
+      right: 105px;
+      bottom: 34px;
+      color: var(--burgundy);
+      font-size: 21px;
+      opacity: 0.3;
+    }
+
+    /* Vintage medical label */
+
+    .mini-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 22px;
+      padding: 8px 13px;
+      border: 1px solid #c9cbb4;
+      background: rgba(220, 224, 205, 0.48);
+      color: var(--sage-dark);
+      font-family: "Libre Baskerville", Georgia, serif;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    .mini-badge .dot {
+      width: 8px;
+      height: 8px;
+      flex-shrink: 0;
+      border: 1px solid var(--sage-dark);
+      background: var(--sage);
+      transform: rotate(45deg);
+    }
+
+    .eyebrow {
+      margin: 0 0 9px;
+      color: var(--burgundy);
+      font-family: "Libre Baskerville", Georgia, serif;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      line-height: 1.7;
+      text-transform: uppercase;
+    }
+
+    .question {
+      max-width: 520px;
+      margin: 0;
+      color: #374335;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: clamp(34px, 5vw, 43px);
+      font-weight: 700;
+      line-height: 1.08;
+      letter-spacing: -0.025em;
+    }
+
+    .question span {
+      display: inline-block;
+      margin-left: 3px;
+      font-family: sans-serif;
+      font-size: 25px;
+      vertical-align: middle;
+      transform: rotate(-7deg);
+    }
+
+    .ornament {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      width: 180px;
+      margin-top: 17px;
+      color: #a48b61;
+      font-size: 12px;
+    }
+
+    .ornament::before,
+    .ornament::after {
+      content: "";
+      height: 1px;
+      flex: 1;
+      background: #cbb995;
+    }
+
+    .subtext {
+      margin: 13px 0 27px;
+      color: #827966;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 20px;
+      font-weight: 500;
+      line-height: 1.45;
+    }
+
+    /* Prescription-inspired input */
+
+    .form-row {
+      display: flex;
+      align-items: stretch;
+      gap: 11px;
+      width: 100%;
+      max-width: 555px;
+    }
+
+    .input-area {
+      display: flex;
+      align-items: stretch;
+      flex: 1;
+      min-width: 0;
+      padding: 5px;
+      background: rgba(255, 250, 240, 0.8);
+      border: 1px solid #d3c5a7;
+      border-radius: 3px;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .input-area:focus-within {
+      background: var(--white);
+      border-color: var(--sage);
+      box-shadow: 0 0 0 3px rgba(102, 120, 91, 0.12);
+    }
+
+    .prefix {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 62px;
+      padding: 0 12px;
+      background: #e1e3d2;
+      border: 1px solid #cbd0b9;
+      color: var(--sage-dark);
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .name-input {
+      flex: 1;
+      min-width: 0;
+      padding: 14px 15px;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: var(--ink);
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 21px;
+      font-weight: 600;
+    }
+
+    .name-input::placeholder {
+      color: #b1a68e;
+      font-size: 19px;
+      font-weight: 400;
+    }
+
+    .check-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-shrink: 0;
+      padding: 0 20px;
+      border: 1px solid #3f503b;
+      border-radius: 3px;
+      background: var(--sage-dark);
+      color: #fff8e8;
+      font-family: "Libre Baskerville", Georgia, serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.015em;
+      cursor: pointer;
+      box-shadow: 0 3px 0 #34432f;
+      transition:
+        transform 0.18s ease,
+        background 0.18s ease,
+        box-shadow 0.18s ease;
+    }
+
+    .check-button:hover {
+      background: #586c50;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 0 #34432f;
+    }
+
+    .check-button:active {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0 #34432f;
+    }
+
+    .check-button .arrow {
+      font-size: 17px;
+      line-height: 1;
+      transition: transform 0.18s ease;
+    }
+
+    .check-button:hover .arrow {
+      transform: translateX(3px);
+    }
+
+    .check-button:focus-visible,
+    .name-input:focus-visible {
+      outline: 2px solid var(--burgundy);
+      outline-offset: 3px;
+    }
+
+    .check-button:focus:not(:focus-visible) {
+      outline: none;
+    }
+
+    .bottom-note {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-top: 22px;
+      padding-top: 15px;
+      border-top: 1px dashed #d2c3a5;
+      color: #8a806d;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 16px;
+      font-style: italic;
+      line-height: 1.45;
+    }
+
+    .bottom-note .plus {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 21px;
+      height: 21px;
+      flex-shrink: 0;
+      border: 1px solid #c5cbb1;
+      background: #e7e7d7;
+      color: var(--sage-dark);
+      font-family: Georgia, serif;
+      font-size: 13px;
+      font-style: normal;
+    }
+
+    .error-text {
+      min-height: 17px;
+      margin-top: 10px;
+      color: var(--burgundy);
+      font-family: "Libre Baskerville", Georgia, serif;
+      font-size: 10px;
+      line-height: 1.6;
+    }
+
+    /* Feedback animations */
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-4px); }
+      50% { transform: translateX(4px); }
+      75% { transform: translateX(-4px); }
+    }
+
+    .input-area.shake {
+      animation: shake 0.25s ease-in-out 2;
+      border-color: #b56c64;
+      background: #fbefeb;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.015); }
+      100% { transform: scale(1); }
+    }
+
+    .panel.pulse {
+      animation: pulse 0.6s ease;
+    }
+
+    .check-button.success {
+      background: #66785b;
+      cursor: default;
+      box-shadow: 0 3px 0 #34432f;
+    }
+
+    /* Mobile layout */
+
+    @media (max-width: 720px) {
+      body {
+        padding: 18px;
+      }
+
+      .panel {
+        width: 100%;
+        min-height: auto;
+        padding: 38px 27px 31px;
+      }
+
+      .panel::before {
+        inset: 10px;
+      }
+
+      .question {
+        font-size: 36px;
+      }
+
+      .subtext {
+        margin-bottom: 23px;
+        font-size: 19px;
+      }
+
+      .form-row {
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .input-area {
+        width: 100%;
+      }
+
+      .name-input {
+        font-size: 19px;
+      }
+
+      .check-button {
+        min-height: 49px;
+        width: 100%;
+      }
+
+      .cross.one {
+        right: 34px;
+      }
+
+      .bottom-note {
+        font-size: 15px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      body {
+        padding: 12px;
+      }
+
+      .panel {
+        padding: 33px 22px 28px;
+      }
+
+      .question {
+        font-size: 32px;
+      }
+
+      .prefix {
+        min-width: 52px;
+        padding: 0 9px;
+      }
+
+      .name-input {
+        padding: 12px 10px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="panel" data-answer="padosani" data-target="Esha.html"
+       data-own-name="esha" data-other-names="vaidavi neha">
+
+    <div class="blob green"></div>
+    <div class="blob blue"></div>
+    <div class="cross one">✚</div>
+    <div class="cross two">✚</div>
+
+    <div class="content">
+
+      <div class="mini-badge">
+        <span class="dot"></span>
+        A Personal Medical Inquiry
+      </div>
+
+      <p class="eyebrow">Doctor records · Confidential</p>
+
+      <h2 class="question">
+        What does Stephen call you?
+        <span>☺</span>
+      </h2>
+
+      <div class="ornament">✦</div>
+
+      <p class="subtext">
+        He addresses you uniquely with it.
+      </p>
+
+      <div class="form-row">
+        <div class="input-area">
+          <div class="prefix">Dr.</div>
+
+          <input
+            class="name-input"
+            type="text"
+            placeholder="Your name"
+            autocomplete="off"
+            aria-label="Enter your name"
+          />
+        </div>
+
+        <button class="check-button" type="button">
+          Let's check
+          <span class="arrow">→</span>
+        </button>
+      </div>
+
+      <div class="error-text" aria-live="polite"></div>
+
+      <div class="bottom-note">
+        <span class="plus">✚</span>
+        <span>
+          He uses it when talking to you or introducing you to others.
+        </span>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="guess.js" defer></script>
+</body>
+</html>

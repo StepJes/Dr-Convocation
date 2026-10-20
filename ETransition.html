@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Journey — Sept 2021 to 28 Oct 2026</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Great+Vibes&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Interpolated every frame by JS between the two themes */
+  --text: #ffffff;
+  --muted: #a5abc5;
+  --accent: #8b5cf6;
+  --accent2: #22d3ee;
+  --card-line: rgba(255, 255, 255, 0.09);
+  --card-bg: rgba(255, 255, 255, 0.05);
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  overflow-x: hidden;
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+  background: #080b18;
+}
+
+/* ---------- Background layers (cross-faded by progress) ---------- */
+
+.bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+
+#modern-bg {
+  background:
+    radial-gradient(ellipse at 15% 20%, #24205b 0%, transparent 45%),
+    radial-gradient(ellipse at 85% 80%, #10364c 0%, transparent 45%),
+    #080b18;
+  z-index: 0;
+}
+
+#vintage-bg {
+  opacity: 0;
+  background:
+    radial-gradient(ellipse at 50% 45%, #59432f 0%, #30251e 65%, #1d1713 100%);
+  z-index: 1;
+}
+
+/* Parchment paper texture that fades in with the vintage layer */
+#paper-texture {
+  opacity: 0;
+  z-index: 2;
+  background:
+    repeating-linear-gradient(0deg, transparent 0, rgba(165, 138, 93, 0.05) 2px, transparent 4px),
+    radial-gradient(ellipse at 50% 50%, transparent 55%, rgba(0, 0, 0, 0.45) 100%);
+}
+
+#stars {
+  z-index: 3;
+  background-image:
+    radial-gradient(2px 2px at 20% 30%, #ffffffaa 50%, transparent),
+    radial-gradient(1px 1px at 70% 20%, #ffffffaa 50%, transparent),
+    radial-gradient(2px 2px at 80% 60%, #ffffff88 50%, transparent),
+    radial-gradient(1px 1px at 35% 80%, #ffffff99 50%, transparent),
+    radial-gradient(2px 2px at 55% 45%, #ffffff66 50%, transparent),
+    radial-gradient(1px 1px at 10% 70%, #ffffff77 50%, transparent),
+    radial-gradient(2px 2px at 45% 12%, #ffffff55 50%, transparent);
+  background-size: 250px 250px;
+  animation: twinkle 5s ease-in-out infinite alternate;
+}
+
+@keyframes twinkle {
+  from { opacity: 0.4; }
+  to   { opacity: 1; }
+}
+
+/* ---------- Stage ---------- */
+
+.stage {
+  position: relative;
+  z-index: 10;
+  width: min(860px, 92%);
+  padding: 50px 20px 40px;
+  margin: auto; /* safe vertical centering — never clips the top */
+  text-align: center;
+  transition: filter 0.35s ease;
+}
+
+/* Flashback cue while the timeline speed-runs backwards */
+body.rewinding .stage {
+  filter: blur(2px) saturate(1.25);
+}
+
+.eyebrow {
+  display: inline-block;
+  padding: 8px 17px;
+  margin-bottom: 26px;
+  border: 1px solid var(--card-line);
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--accent);
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  transition: border-color 0.4s;
+}
+
+/* Stacked dual-text: sans (modern) fades into serif (vintage) */
+.stack {
+  display: grid;
+}
+
+.stack > * {
+  grid-area: 1 / 1;
+}
+
+h1 {
+  font-size: clamp(38px, 8vw, 74px);
+  font-weight: 800;
+  letter-spacing: -2px;
+  line-height: 1.08;
+}
+
+h1.sans {
+  background: linear-gradient(90deg, #a78bfa, #67e8f9);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+h1.serif {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 500;
+  letter-spacing: 0;
+  opacity: 0;
+  background: linear-gradient(90deg, #e2c78d, #b99a61);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* The ticking date readout */
+.date-wrap {
+  margin-top: 20px;
+  position: relative;
+  min-height: 1.4em;
+}
+
+.date-text {
+  font-size: clamp(17px, 3.4vw, 26px);
+  font-weight: 700;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+}
+
+.date-text.sans {
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.date-text.serif {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 600;
+  letter-spacing: 6px;
+  color: #e8d5af;
+  opacity: 0;
+}
+
+.day-counter {
+  margin-top: 9px;
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Timeline track ---------- */
+
+.track-zone {
+  position: relative;
+  margin: 52px auto 0;
+  max-width: 760px;
+  padding: 0 4px;
+}
+
+.track {
+  position: relative;
+  height: 4px;
+  border-radius: 4px;
+  background: var(--card-line);
+}
+
+.track-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 0%;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  box-shadow: 0 0 14px var(--accent);
+}
+
+.track-thumb {
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 16px var(--accent2);
+  transform: translate(-50%, -50%);
+}
+
+.dot {
+  position: absolute;
+  top: 50%;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  background: #0b0e1c;
+  transform: translate(-50%, -50%);
+  transition: background 0.35s, box-shadow 0.35s, transform 0.35s;
+}
+
+.dot.passed {
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--accent);
+  transform: translate(-50%, -50%) scale(1.15);
+}
+
+.dot.final {
+  width: 15px;
+  height: 15px;
+}
+
+.tick-label {
+  position: absolute;
+  top: 16px;
+  transform: translateX(-50%);
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+
+/* ---------- Milestone card ---------- */
+
+.card {
+  margin: 44px auto 0;
+  max-width: 560px;
+  padding: 30px 28px;
+  border-radius: 20px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-line);
+  backdrop-filter: blur(14px);
+  transition: opacity 0.35s ease, transform 0.35s ease,
+              background 0.4s, border-color 0.4s;
+}
+
+.card.swapping {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.card .card-date {
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+.card h2 {
+  font-size: clamp(22px, 4.5vw, 30px);
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin-bottom: 12px;
+}
+
+.card.is-vintage h2 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.card p {
+  color: var(--muted);
+  font-size: clamp(14px, 2.6vw, 16px);
+  line-height: 1.7;
+}
+
+/* ---------- Controls ---------- */
+
+.controls {
+  margin-top: 34px;
+  min-height: 46px;
+}
+
+.btn {
+  display: inline-block;
+  margin: 0 6px;
+  padding: 11px 22px;
+  border: 1px solid var(--accent);
+  border-radius: 50px;
+  background: transparent;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.3s, color 0.3s, opacity 0.4s;
+}
+
+.btn:hover {
+  background: var(--accent);
+  color: #0b0e1c;
+}
+
+#skipBtn {
+  opacity: 0.8;
+}
+
+.ending {
+  display: none;
+}
+
+.ending.show {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  animation: appear 0.9s ease both;
+}
+
+.ending .btn {
+  margin: 0;
+}
+
+.ending .seal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 54px;
+  height: 54px;
+  padding: 0;
+  border-radius: 50%;
+  border: 2px solid #8c3d32;
+  background: radial-gradient(circle at 30% 25%, #a64d40, #76251f 65%, #4b1714);
+  color: #e6c789;
+  font-family: inherit;
+  font-size: 22px;
+  box-shadow: 0 3px 9px rgba(80, 48, 28, 0.5), inset 0 0 0 3px #a9574a;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  animation: pop 0.7s cubic-bezier(0.2, 0.9, 0.3, 1.4) both;
+}
+
+.ending .seal:hover {
+  transform: scale(1.12);
+}
+
+.ending .seal:focus-visible {
+  outline: 2px solid var(--accent2);
+  outline-offset: 3px;
+}
+
+/* ---------- Envelope transition overlay ---------- */
+
+#transition-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(12, 9, 7, 0);
+  transition: background 0.7s ease;
+  cursor: pointer;
+}
+
+#transition-overlay.active {
+  display: flex;
+}
+
+#transition-overlay.dim {
+  background: rgba(12, 9, 7, 0.88);
+}
+
+#transition-overlay.wash {
+  background: #e8d5af;
+}
+
+#transition-stage {
+  opacity: 0;
+  transform: scale(0.85) translateY(20px);
+  transition: opacity 0.8s ease,
+              transform 0.8s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+}
+
+#transition-overlay.active #transition-stage {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+#transition-overlay.wash #transition-stage {
+  opacity: 0;
+  transform: scale(1.12);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.t-envelope {
+  position: relative;
+  width: min(340px, 72vw);
+  aspect-ratio: 39 / 25;
+  perspective: 1000px;
+  filter: drop-shadow(0 25px 24px rgba(0, 0, 0, 0.4));
+}
+
+.t-back,
+.t-left,
+.t-right,
+.t-bottom {
+  position: absolute;
+  inset: 0;
+}
+
+.t-back {
+  background: linear-gradient(135deg, #d9c195, #eddbb6);
+  border: 1px solid #a58a5d;
+}
+
+.t-left {
+  clip-path: polygon(0 0, 53% 55%, 0 100%);
+  background: linear-gradient(120deg, #ead7b1, #cbb184);
+  z-index: 3;
+}
+
+.t-right {
+  clip-path: polygon(100% 0, 47% 55%, 100% 100%);
+  background: linear-gradient(240deg, #d5bd93, #eddbb6);
+  z-index: 3;
+}
+
+.t-bottom {
+  clip-path: polygon(0 100%, 50% 47%, 100% 100%);
+  background: linear-gradient(0deg, #d5bd93, #e8d3aa);
+  z-index: 4;
+}
+
+.t-flap {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 60%;
+  background: linear-gradient(160deg, #e9d6b0, #cdb38a);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  transform-origin: top center;
+  transition: transform 0.8s ease;
+  z-index: 6;
+}
+
+.t-envelope.open .t-flap {
+  transform: rotateX(180deg);
+  z-index: 1;
+}
+
+.t-seal {
+  position: absolute;
+  top: 44%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 2px solid #8c3d32;
+  background: radial-gradient(circle at 30% 25%, #a64d40, #76251f 65%, #4b1714);
+  color: #e6c789;
+  font-size: 22px;
+  box-shadow: 0 3px 9px rgba(80, 48, 28, 0.5), inset 0 0 0 3px #a9574a;
+  transition: opacity 0.45s ease, transform 0.45s ease;
+  z-index: 7;
+}
+
+.t-envelope.broken .t-seal {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(1.6) rotate(25deg);
+}
+
+.t-letter {
+  position: absolute;
+  left: 6%;
+  bottom: 6%;
+  width: 88%;
+  height: 84%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5e8cc;
+  border: 1px solid #d0b98f;
+  z-index: 2;
+  transition: transform 0.9s cubic-bezier(0.25, 0.8, 0.3, 1);
+}
+
+.t-letter span {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-style: italic;
+  font-size: clamp(13px, 3vw, 17px);
+  color: #896b3d;
+  opacity: 0;
+  transition: opacity 0.5s ease 0.35s;
+}
+
+.t-envelope.rise .t-letter {
+  transform: translateY(-46%);
+}
+
+.t-envelope.rise .t-letter span {
+  opacity: 1;
+}
+
+.t-hint {
+  position: fixed;
+  bottom: 26px;
+  left: 0;
+  right: 0;
+  color: #c8b69c;
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  opacity: 0;
+  transition: opacity 0.5s ease 0.8s;
+  z-index: 101;
+}
+
+#transition-overlay.active .t-hint {
+  opacity: 0.7;
+}
+
+@keyframes pop {
+  from { opacity: 0; transform: scale(0.4); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes appear {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+footer {
+  margin-top: 38px;
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 560px) {
+  .stage {
+    padding: 35px 12px 30px;
+  }
+
+  .track-zone {
+    margin-top: 40px;
+  }
+
+  .tick-label {
+    display: none;
+  }
+
+  .card {
+    margin-top: 34px;
+    padding: 24px 18px;
+    border-radius: 16px;
+  }
+
+  .date-text {
+    letter-spacing: 3px;
+  }
+
+  .btn {
+    display: block;
+    margin: 8px auto 0;
+    width: max-content;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+</style>
+</head>
+
+<body>
+
+  <div class="bg" id="modern-bg"></div>
+  <div class="bg" id="vintage-bg"></div>
+  <div class="bg" id="paper-texture"></div>
+  <div class="bg" id="stars"></div>
+
+  <main class="stage">
+
+    <p class="eyebrow" id="eyebrow">A Timelapse &middot; Sept 2021 &rarr; Oct 2026</p>
+
+    <div class="stack">
+      <h1 class="sans" id="headSans">It begins.</h1>
+      <h1 class="serif" id="headSerif" aria-hidden="true">It begins.</h1>
+    </div>
+
+    <div class="date-wrap stack">
+      <p class="date-text sans" id="dateSans">SEPTEMBER 2021</p>
+      <p class="date-text serif" id="dateSerif" aria-hidden="true">SEPTEMBER 2021</p>
+    </div>
+    <p class="day-counter" id="dayCounter">DAY 1 OF 1,884</p>
+
+    <div class="track-zone">
+      <div class="track" id="track">
+        <div class="track-fill" id="trackFill"></div>
+        <div class="track-thumb" id="trackThumb"></div>
+      </div>
+    </div>
+
+    <section class="card" id="card" aria-live="polite">
+      <p class="card-date" id="cardDate">SEPTEMBER 2021</p>
+      <h2 id="cardTitle">Admission Day</h2>
+      <p id="cardText">A white coat that still fits too big, a bag full of brand-new books, and absolutely no idea what is coming.</p>
+    </section>
+
+    <div class="controls">
+      <button class="btn" id="skipBtn" type="button">Skip to the end &raquo;</button>
+      <div class="ending" id="ending">
+        <button class="seal" id="finaleSeal" type="button"
+          aria-label="Open your letter">&#10022;</button>
+        <button class="btn" id="openLetterBtn" type="button">
+          Open your letter &rarr;
+        </button>
+        <button class="btn" id="replayBtn" type="button">&#8634; Replay</button>
+      </div>
+    </div>
+
+    <footer>Make every second count</footer>
+  </main>
+
+  <!-- Full-screen envelope transition, played before leaving for E-Letter.html -->
+  <div id="transition-overlay" aria-hidden="true">
+    <div id="transition-stage">
+      <div class="t-envelope" id="tEnvelope">
+        <div class="t-letter"><span>A letter for Dr. Esha&hellip;</span></div>
+        <div class="t-back"></div>
+        <div class="t-left"></div>
+        <div class="t-right"></div>
+        <div class="t-bottom"></div>
+        <div class="t-flap"></div>
+        <div class="t-seal"><span>&#10022;</span></div>
+      </div>
+    </div>
+    <p class="t-hint">Click to skip</p>
+  </div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ------------------------------------------------------------------ *
+   *  Timeline definition
+   * ------------------------------------------------------------------ */
+
+  const START = new Date(2021, 8, 1).getTime();   // 1 September 2021
+  const END   = new Date(2026, 9, 28).getTime();  // 28 October 2026
+  const SPAN  = END - START;
+  const TOTAL_DAYS = Math.round(SPAN / 86400000);
+
+  // How long the whole timelapse takes to play (ms).
+  const DURATION = 26000;
+
+  const MONTHS = [
+    "JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE",
+    "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"
+  ];
+
+  const MILESTONES = [
+    {
+      date: new Date(2021, 8, 1),
+      head: "It begins.",
+      label: "September 2021",
+      title: "Admission Day",
+      text: "A white coat that still fits too big, a bag full of brand-new books, and absolutely no idea what is coming."
+    },
+    {
+      date: new Date(2022, 3, 1),
+      head: "The grind.",
+      label: "April 2022",
+      title: "First-Year Exams",
+      text: "Anatomy charts at 2 a.m., physiology vivas, and Sarir Rachana marathons with the friends who quietly became family."
+    },
+    {
+      date: new Date(2023, 8, 1),
+      head: "Going deeper.",
+      label: "September 2023",
+      title: "Second Year",
+      text: "Kayachikitsa wards, Roga Nidan notes, and the first time a patient called you doctor by mistake. You blushed. You liked it."
+    },
+    {
+      date: new Date(2024, 8, 1),
+      head: "The long nights.",
+      label: "September 2024",
+      title: "Third Year",
+      text: "Panchakarma tables, Shalya OT evenings, Prasuti Tantra notes — and exams that always felt closer than they were."
+    },
+    {
+      date: new Date(2025, 8, 1),
+      head: "Into the ward.",
+      label: "September 2025",
+      title: "The Internship",
+      text: "Real patients, a real stethoscope, night duties that end with sunrise chai. You stopped counting hours and started counting lives touched."
+    },
+    {
+      date: new Date(2026, 9, 28),
+      head: "Dr. Esha.",
+      label: "28 October 2026",
+      title: "Convocation",
+      text: "Five years, one white coat, and a title you earned twice — once in study, once in service. Congratulations, Doctor."
+    }
+  ];
+
+  /* ------------------------------------------------------------------ *
+   *  Theme interpolation (modern dark -> vintage paper)
+   * ------------------------------------------------------------------ */
+
+  const THEMES = {
+    modern: {
+      text:    [255, 255, 255],
+      muted:   [165, 171, 197],
+      accent:  [139, 92, 246],
+      accent2: [34, 211, 238],
+      cardBg:  [255, 255, 255, 0.05],
+      cardLine:[255, 255, 255, 0.09]
+    },
+    vintage: {
+      text:    [245, 232, 204],
+      muted:   [200, 182, 156],
+      accent:  [185, 154, 97],
+      accent2: [230, 199, 137],
+      cardBg:  [232, 213, 175, 0.10],
+      cardLine:[185, 154, 97, 0.32]
+    }
+  };
+
+  function mix(a, b, t) {
+    return [
+      a[0] + (b[0] - a[0]) * t,
+      a[1] + (b[1] - a[1]) * t,
+      a[2] + (b[2] - a[2]) * t
+    ];
+  }
+
+  function rgb(c) {
+    return "rgb(" + Math.round(c[0]) + "," + Math.round(c[1]) + "," + Math.round(c[2]) + ")";
+  }
+
+  function rgba(c, alpha) {
+    return "rgba(" + Math.round(c[0]) + "," + Math.round(c[1]) + "," + Math.round(c[2]) + "," + alpha + ")";
+  }
+
+  function mixAlpha(a, b, t) {
+    return a[3] + (b[3] - a[3]) * t;
+  }
+
+  // Smooth 0->1 ramp between edges a and b.
+  function smoothstep(a, b, x) {
+    const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
+    return t * t * (3 - 2 * t);
+  }
+
+  /* ------------------------------------------------------------------ *
+   *  Elements
+   * ------------------------------------------------------------------ */
+
+  const root          = document.documentElement;
+  const starsEl       = document.getElementById("stars");
+  const vintageBgEl   = document.getElementById("vintage-bg");
+  const paperEl       = document.getElementById("paper-texture");
+  const headSansEl    = document.getElementById("headSans");
+  const headSerifEl   = document.getElementById("headSerif");
+  const dateSansEl    = document.getElementById("dateSans");
+  const dateSerifEl   = document.getElementById("dateSerif");
+  const dayCounterEl  = document.getElementById("dayCounter");
+  const trackEl       = document.getElementById("track");
+  const trackFillEl   = document.getElementById("trackFill");
+  const trackThumbEl  = document.getElementById("trackThumb");
+  const cardEl        = document.getElementById("card");
+  const cardDateEl    = document.getElementById("cardDate");
+  const cardTitleEl   = document.getElementById("cardTitle");
+  const cardTextEl    = document.getElementById("cardText");
+  const skipBtn       = document.getElementById("skipBtn");
+  const endingEl      = document.getElementById("ending");
+  const eyebrowEl     = document.getElementById("eyebrow");
+  const replayBtn     = document.getElementById("replayBtn");
+  const finaleSeal    = document.getElementById("finaleSeal");
+  const openLetterBtn = document.getElementById("openLetterBtn");
+  const overlayEl     = document.getElementById("transition-overlay");
+  const tEnvelopeEl   = document.getElementById("tEnvelope");
+
+  const LETTER_PAGE = "E-Letter.html";
+
+  const prefersReducedMotion =
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ------------------------------------------------------------------ *
+   *  Build timeline decorations (dots + year ticks)
+   * ------------------------------------------------------------------ */
+
+  const dots = [];
+
+  MILESTONES.forEach(function (m, i) {
+    const pct = (m.date.getTime() - START) / SPAN * 100;
+    const dot = document.createElement("div");
+    dot.className = "dot" + (i === MILESTONES.length - 1 ? " final" : "");
+    dot.style.left = pct + "%";
+    dot.title = m.label;
+    trackEl.appendChild(dot);
+    dots.push(dot);
+  });
+
+  [2022, 2023, 2024, 2025, 2026].forEach(function (year) {
+    const t = new Date(year, 0, 1).getTime();
+    if (t <= START || t >= END) return;
+    const pct = (t - START) / SPAN * 100;
+    const label = document.createElement("span");
+    label.className = "tick-label";
+    label.style.left = pct + "%";
+    label.textContent = year;
+    trackEl.appendChild(label);
+  });
+
+  const startLabel = document.createElement("span");
+  startLabel.className = "tick-label";
+  startLabel.style.left = "0%";
+  startLabel.style.transform = "none";
+  startLabel.textContent = "2021";
+  trackEl.appendChild(startLabel);
+
+  const endLabel = document.createElement("span");
+  endLabel.className = "tick-label";
+  endLabel.style.left = "100%";
+  endLabel.style.transform = "translateX(-100%)";
+  endLabel.textContent = "2026";
+  trackEl.appendChild(endLabel);
+
+  /* ------------------------------------------------------------------ *
+   *  Rendering
+   * ------------------------------------------------------------------ */
+
+  let currentMilestone = -1;
+  let cardSwapTimer = null;
+  let lastP = 0;       // last rendered progress, used as the rewind start point
+  let rewinding = false;
+
+  function setDualText(sansEl, serifEl, text) {
+    if (sansEl.textContent !== text) {
+      sansEl.textContent = text;
+      serifEl.textContent = text;
+    }
+  }
+
+  function showMilestone(index, animate) {
+    if (index === currentMilestone) return;
+    currentMilestone = index;
+    const m = MILESTONES[index];
+
+    const apply = function () {
+      setDualText(headSansEl, headSerifEl, m.head);
+      cardDateEl.textContent = m.label;
+      cardTitleEl.textContent = m.title;
+      cardTextEl.textContent = m.text;
+      cardEl.classList.remove("swapping");
+    };
+
+    if (animate && !prefersReducedMotion) {
+      cardEl.classList.add("swapping");
+      clearTimeout(cardSwapTimer);
+      cardSwapTimer = setTimeout(apply, 350);
+    } else {
+      apply();
+    }
+  }
+
+  function render(p) {
+    lastP = p;
+
+    // --- Theme mix -----------------------------------------------------
+    // The theme starts changing around 35% and settles around 80%.
+    const themeMix = smoothstep(0.35, 0.8, p);
+
+    root.style.setProperty("--text",    rgb(mix(THEMES.modern.text,    THEMES.vintage.text,    themeMix)));
+    root.style.setProperty("--muted",   rgb(mix(THEMES.modern.muted,   THEMES.vintage.muted,   themeMix)));
+    root.style.setProperty("--accent",  rgb(mix(THEMES.modern.accent,  THEMES.vintage.accent,  themeMix)));
+    root.style.setProperty("--accent2", rgb(mix(THEMES.modern.accent2, THEMES.vintage.accent2, themeMix)));
+    root.style.setProperty("--card-bg", rgba(
+      mix(THEMES.modern.cardBg, THEMES.vintage.cardBg, themeMix),
+      mixAlpha(THEMES.modern.cardBg, THEMES.vintage.cardBg, themeMix)
+    ));
+    root.style.setProperty("--card-line", rgba(
+      mix(THEMES.modern.cardLine, THEMES.vintage.cardLine, themeMix),
+      mixAlpha(THEMES.modern.cardLine, THEMES.vintage.cardLine, themeMix)
+    ));
+
+    vintageBgEl.style.opacity = themeMix;
+    paperEl.style.opacity = themeMix * 0.9;
+    starsEl.style.opacity = 1 - smoothstep(0.3, 0.7, p);
+
+    // Font cross-fade: bold sans (modern) -> Cormorant serif (vintage)
+    const serifMix = smoothstep(0.45, 0.8, p);
+    headSerifEl.style.opacity = serifMix;
+    headSansEl.style.opacity = 1 - serifMix;
+    dateSerifEl.style.opacity = serifMix;
+    dateSansEl.style.opacity = 1 - serifMix;
+    cardEl.classList.toggle("is-vintage", serifMix > 0.5);
+
+    // --- Simulated date ------------------------------------------------
+    const time = START + SPAN * p;
+    const d = new Date(time);
+    const dateLabel = MONTHS[d.getMonth()] + " " + d.getFullYear();
+    setDualText(dateSansEl, dateSerifEl, dateLabel);
+
+    const day = Math.min(TOTAL_DAYS, Math.floor(p * TOTAL_DAYS) + 1);
+    dayCounterEl.textContent =
+      "DAY " + day.toLocaleString() + " OF " + TOTAL_DAYS.toLocaleString();
+
+    // --- Track ---------------------------------------------------------
+    const pct = p * 100;
+    trackFillEl.style.width = pct + "%";
+    trackThumbEl.style.left = pct + "%";
+
+    // --- Milestones ----------------------------------------------------
+    let idx = 0;
+    for (let i = 0; i < MILESTONES.length; i++) {
+      const mPct = (MILESTONES[i].date.getTime() - START) / SPAN;
+      if (p >= mPct - 0.0001) idx = i;
+      dots[i].classList.toggle("passed", p >= mPct - 0.0001);
+    }
+    showMilestone(idx, !rewinding);
+  }
+
+  /* ------------------------------------------------------------------ *
+   *  Finale extras: canvas confetti in the transitional palette
+   * ------------------------------------------------------------------ */
+
+  function launchConfetti() {
+    const canvas = document.createElement("canvas");
+    canvas.setAttribute("aria-hidden", "true");
+    canvas.style.cssText =
+      "position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:60";
+    document.body.appendChild(canvas);
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let width = 0;
+    let height = 0;
+
+    function resize() {
+      const dpr = window.devicePixelRatio || 1;
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = Math.round(width * dpr);
+      canvas.height = Math.round(height * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    resize();
+
+    const colors = [
+      "#b99a61", "#e6c789", "#e8d5af", "#8c3d32",
+      "#a64d40", "#f5e8cc", "#c8b69c"
+    ];
+    const particles = [];
+    const gravity = 0.22;
+    const TAU = Math.PI * 2;
+
+    function burst(x, y, count, angle, spread, minSpeed, maxSpeed) {
+      for (let i = 0; i < count; i++) {
+        const a = angle + (Math.random() - 0.5) * spread;
+        const speed = minSpeed + Math.random() * (maxSpeed - minSpeed);
+        particles.push({
+          x: x,
+          y: y,
+          vx: Math.cos(a) * speed,
+          vy: Math.sin(a) * speed,
+          w: 5 + Math.random() * 7,
+          h: 8 + Math.random() * 10,
+          rot: Math.random() * TAU,
+          vr: (Math.random() - 0.5) * 0.3,
+          sway: Math.random() * TAU,
+          swaySpeed: 0.04 + Math.random() * 0.08,
+          color: colors[Math.floor(Math.random() * colors.length)]
+        });
+      }
+    }
+
+    burst(width * 0.5, height * 0.45, 110, 0, TAU, 4, 12);
+    burst(width * 0.08, height, 60, -Math.PI / 3, 0.7, 11, 19);
+    burst(width * 0.92, height, 60, (-Math.PI * 2) / 3, 0.7, 11, 19);
+
+    setTimeout(function () {
+      burst(width * 0.5, height * 0.15, 70, Math.PI / 2, 1.4, 6, 13);
+    }, 500);
+    setTimeout(function () {
+      burst(width * 0.5, height * 0.4, 90, 0, TAU, 4, 12);
+    }, 1100);
+
+    const endAt = Date.now() + 1800;
+
+    function frame() {
+      ctx.clearRect(0, 0, width, height);
+
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+
+        p.vy += gravity;
+        p.vx *= 0.995;
+        p.sway += p.swaySpeed;
+        p.x += p.vx + Math.sin(p.sway);
+        p.y += p.vy;
+        p.rot += p.vr;
+
+        if (p.y > height + 40 || p.x < -60 || p.x > width + 60) {
+          particles.splice(i, 1);
+          continue;
+        }
+
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot);
+        ctx.scale(Math.max(0.15, Math.abs(Math.cos(p.sway * 1.3))), 1);
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+        ctx.fillStyle = "rgba(0, 0, 0, 0.15)";
+        ctx.fillRect(-p.w / 2, -p.h / 2, p.w / 2, p.h);
+        ctx.restore();
+      }
+
+      if (particles.length > 0 || Date.now() < endAt) {
+        requestAnimationFrame(frame);
+      } else {
+        canvas.remove();
+      }
+    }
+
+    requestAnimationFrame(frame);
+  }
+
+  /* ------------------------------------------------------------------ *
+   *  Playback
+   * ------------------------------------------------------------------ */
+
+  let startTime = null;
+  let rafId = null;
+
+  // Flashback: speed-run the timeline backwards from the current point
+  // all the way to September 2021, then hand over to a fresh run.
+  const REWIND_DURATION = 3800;
+
+  let rewindStart = null;
+  let rewindFrom = 1;
+
+  function rewindFrame(now) {
+    if (rewindStart === null) rewindStart = now;
+    const t = Math.min(1, (now - rewindStart) / REWIND_DURATION);
+    // Ease in-out so the flashback settles gently back on "It begins."
+    const eased = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+    render(rewindFrom * (1 - eased));
+
+    if (t < 1) {
+      rafId = requestAnimationFrame(rewindFrame);
+    } else {
+      rewindStart = null;
+      play();
+    }
+  }
+
+  function replay() {
+    cancelAnimationFrame(rafId);
+    endingEl.classList.remove("show");
+    skipBtn.style.display = "none";
+
+    if (prefersReducedMotion) {
+      play();
+      return;
+    }
+
+    rewinding = true;
+    rewindFrom = lastP;
+    rewindStart = null;
+    document.body.classList.add("rewinding");
+    eyebrowEl.textContent = "\u27F2 Rewinding the journey\u2026";
+    rafId = requestAnimationFrame(rewindFrame);
+  }
+
+  function frame(now) {
+    if (startTime === null) startTime = now;
+    const p = Math.min(1, (now - startTime) / DURATION);
+    render(p);
+
+    if (p < 1) {
+      rafId = requestAnimationFrame(frame);
+    } else {
+      finish();
+    }
+  }
+
+  function finish() {
+    cancelAnimationFrame(rafId);
+    render(1);
+    skipBtn.style.display = "none";
+    endingEl.classList.add("show");
+    if (!prefersReducedMotion) {
+      launchConfetti();
+    }
+  }
+
+  function play() {
+    cancelAnimationFrame(rafId);
+    rewinding = false;
+    startTime = null;
+    currentMilestone = -1;
+    document.body.classList.remove("rewinding");
+    eyebrowEl.textContent = "A Timelapse \u00B7 Sept 2021 \u2192 Oct 2026";
+    skipBtn.style.display = "";
+    endingEl.classList.remove("show");
+    showMilestone(0, false);
+    render(0);
+    rafId = requestAnimationFrame(frame);
+  }
+
+  skipBtn.addEventListener("click", function () {
+    cancelAnimationFrame(rafId);
+    finish();
+  });
+
+  replayBtn.addEventListener("click", replay);
+
+  /* ------------------------------------------------------------------ *
+   *  Envelope transition -> E-Letter.html
+   * ------------------------------------------------------------------ */
+
+  let transitioning = false;
+  const transitionTimers = [];
+
+  function goToLetter() {
+    window.location.href = LETTER_PAGE;
+  }
+
+  function skipTransition() {
+    transitionTimers.forEach(clearTimeout);
+    goToLetter();
+  }
+
+  // Seal breaks, flap opens, letter rises, parchment wash, then away.
+  function openLetter() {
+    if (transitioning) return;
+    transitioning = true;
+
+    if (prefersReducedMotion) {
+      goToLetter();
+      return;
+    }
+
+    overlayEl.classList.add("active");
+    void overlayEl.offsetWidth; // let the display change register first
+    overlayEl.classList.add("dim");
+
+    function at(ms, fn) {
+      transitionTimers.push(setTimeout(fn, ms));
+    }
+
+    at(900,  function () { tEnvelopeEl.classList.add("broken"); });
+    at(1350, function () { tEnvelopeEl.classList.add("open"); });
+    at(1750, function () { tEnvelopeEl.classList.add("rise"); });
+    at(2600, function () { overlayEl.classList.add("wash"); });
+    at(3400, goToLetter);
+
+    // Any click during the sequence jumps straight to the letter.
+    overlayEl.addEventListener("click", skipTransition, { once: true });
+  }
+
+  openLetterBtn.addEventListener("click", openLetter);
+  finaleSeal.addEventListener("click", openLetter);
+
+  /* ------------------------------------------------------------------ *
+   *  Go
+   * ------------------------------------------------------------------ */
+
+  if (prefersReducedMotion) {
+    // No ticking animation — show the completed journey right away.
+    finish();
+  } else {
+    showMilestone(0, false);
+    render(0);
+    setTimeout(play, 1200);
+  }
+})();
+</script>
+</body>
+</html>

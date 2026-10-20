@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Trio | Esha, Vaidavi & Neha</title>
+  <meta name="description" content="The Trio - Esha, Vaidavi and Neha. Together through the BAMS journey at R.A. Podar Ayurved Medical College.">
+  <meta name="theme-color" content="#172f25">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="theme.css">
+  <style>
+    .trio-hero-banner {
+      position: relative;
+      min-height: clamp(60vh, 80vw, 90vh);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+      padding-top: var(--header-height);
+    }
+
+    .trio-hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .trio-hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .trio-hero-overlay {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      padding-block: clamp(4rem, 10vw, 8rem);
+      background: linear-gradient(to bottom, rgba(11, 34, 46, 0.6) 0%, rgba(11, 34, 46, 0.7) 50%, rgba(11, 34, 46, 0.8) 100%);
+    }
+
+    .trio-hero-content {
+      max-width: 50rem;
+      margin: 0 auto;
+    }
+
+    .trio-hero-title {
+      font-size: var(--text-hero);
+      margin-bottom: var(--space-2);
+      color: #fff;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+    }
+
+    .trio-hero-subtitle {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 1.2rem + 1.4vw, 2.125rem);
+      font-style: italic;
+      color: #f0f0f0;
+      margin-bottom: var(--space-3);
+      text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.7);
+    }
+
+    .trio-hero-text {
+      font-size: var(--text-md);
+      color: #fff;
+      max-width: 40rem;
+      margin: 0 auto var(--space-2);
+      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+    }
+
+    .trio-hero-text-secondary {
+      font-size: var(--text-base);
+      color: rgba(255, 255, 255, 0.9);
+      max-width: 38rem;
+      margin: 0 auto;
+      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+    }
+
+    .trio-hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: var(--space-2);
+      margin-top: var(--space-5);
+    }
+
+    .trio-gallery-section {
+      background: var(--color-surface-alt);
+      border-block: 1px solid var(--color-line-soft);
+    }
+
+    .trio-gallery {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-4);
+      margin-top: var(--space-6);
+    }
+
+    .trio-member {
+      text-align: center;
+    }
+
+    .trio-member-frame {
+      position: relative;
+      padding: 14px;
+      background: var(--color-surface);
+      border: 1px solid var(--color-line);
+      box-shadow: var(--shadow-md);
+      margin-bottom: var(--space-3);
+      transition: transform var(--transition-base), box-shadow var(--transition-base);
+    }
+
+    .trio-member-frame:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 38px -26px rgba(11, 34, 46, 0.45);
+    }
+
+    .trio-member-photo {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      object-fit: contain;
+      object-position: center;
+      background: var(--color-surface-alt);
+    }
+
+    .trio-member-name {
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      color: var(--color-primary);
+      margin-bottom: 0.25rem;
+    }
+
+    .trio-member-role {
+      font-size: var(--text-sm);
+      color: var(--color-secondary);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .trio-moments {
+      padding-block: var(--section-pad);
+    }
+
+    .trio-moments-grid {
+      column-count: 3;
+      column-gap: var(--space-4);
+      margin-top: var(--space-6);
+    }
+
+    .trio-moment {
+      break-inside: avoid;
+      margin-bottom: var(--space-4);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--color-line);
+      background: var(--color-surface);
+      box-shadow: var(--shadow-sm);
+      transition: transform var(--transition-base), box-shadow var(--transition-base);
+      display: inline-block;
+      width: 100%;
+    }
+
+    .trio-moment:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .trio-moment img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+    }
+
+    .trio-back {
+      text-align: center;
+      padding-block: var(--space-6);
+      background: var(--color-background);
+    }
+
+    @media (max-width: 900px) {
+      .trio-gallery {
+        grid-template-columns: minmax(0, 1fr);
+        gap: var(--space-5);
+      }
+
+      .trio-member-frame {
+        max-width: 420px;
+        margin: 0 auto var(--space-3);
+      }
+
+      .trio-moments-grid {
+        column-count: 2;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .trio-hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .trio-hero-actions .btn {
+        width: 100%;
+      }
+
+      .trio-moments-grid {
+        column-count: 1;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" id="site-header">
+    <nav class="nav container" aria-label="Primary">
+      <a class="nav-brand">The Trio</a>
+
+      <button class="nav-toggle" type="button" id="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Open menu">
+        <span class="nav-toggle-bar" aria-hidden="true"></span>
+        <span class="nav-toggle-bar" aria-hidden="true"></span>
+        <span class="nav-toggle-bar" aria-hidden="true"></span>
+      </button>
+
+      <div class="nav-menu" id="nav-menu">
+        <ul class="nav-links">
+          <li><a href="#home" class="nav-link">Home</a></li>
+          <li><a href="#members" class="nav-link">Members</a></li>
+          <li><a href="#moments" class="nav-link">Moments</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main">
+
+    <!-- HERO BANNER -->
+    <section class="trio-hero-banner" id="home">
+      <div class="trio-hero-bg">
+        <img src="assets/Trio/TrioHeroImg.jpg" alt="The Trio together">
+      </div>
+      <div class="trio-hero-overlay">
+        <div class="container">
+          <div class="trio-hero-content">
+            <p class="eyebrow reveal" style="justify-content: center; color: white;">Together Through It All</p>
+            <h1 class="trio-hero-title reveal" style="--delay: 60ms">Esha • Vaidavi • Neha</h1>
+            <p class="trio-hero-subtitle reveal" style="--delay: 120ms">The Trio</p>
+            <p class="trio-hero-text reveal" style="--delay: 180ms">
+              Three souls, one journey. Bound by friendship, strengthened by dreams, and walking side by side through the BAMS journey at R.A. Podar Ayurved Medical College, Worli.
+            </p>
+            <p class="trio-hero-text-secondary reveal" style="--delay: 240ms">
+              Their time together — from college corridors to the wards, through laughter and late nights, a bond that goes beyond medicine.
+            </p>
+            <div class="trio-hero-actions reveal" style="--delay: 300ms">
+              <a href="#members" class="btn btn-primary">Meet The Trio</a>
+              <a href="#moments" class="btn btn-ghost" style="color: white; border-color: rgba(255,255,255,0.6);">See Their Moments</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MEMBERS -->
+    <section class="section trio-gallery-section" id="members">
+      <div class="container">
+        <p class="eyebrow reveal" style="justify-content: center;">The Three</p>
+        <h2 class="section-title reveal" style="max-width: none; text-align: center;">Meet The Trio</h2>
+        <p class="section-lead reveal" style="max-width: none; text-align: center; margin: 0 auto var(--space-4);">
+          Each with their own dreams, united by an unshakeable bond.
+        </p>
+
+        <div class="trio-gallery">
+          <article class="trio-member reveal">
+            <div class="trio-member-frame">
+              <img src="assets/Esha/EshaCariature.jpg" alt="Dr. Esha Mugutmal caricature" class="trio-member-photo">
+            </div>
+            <h3 class="trio-member-name">Dr. Esha Mugutmal</h3>
+            <p class="trio-member-role">Gynaecology</p>
+          </article>
+
+          <article class="trio-member reveal" style="--delay: 80ms">
+            <div class="trio-member-frame">
+              <img src="assets/Vaidavi/VaidaviCariature.jpg" alt="Dr. Vaidavi Savale caricature" class="trio-member-photo">
+            </div>
+            <h3 class="trio-member-name">Dr. Vaidavi Savale</h3>
+            <p class="trio-member-role">Pharmacognosy</p>
+          </article>
+
+          <article class="trio-member reveal" style="--delay: 160ms">
+            <div class="trio-member-frame">
+              <img src="assets/Neha/NehaCariature.jpg" alt="Dr. Neha Kharotia caricature" class="trio-member-photo">
+            </div>
+            <h3 class="trio-member-name">Dr. Neha Kharotia</h3>
+            <p class="trio-member-role">BAMS</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- MOMENTS -->
+    <section class="trio-moments" id="moments">
+      <div class="container">
+        <p class="eyebrow reveal" style="justify-content: center;">Memories</p>
+        <h2 class="section-title reveal" style="max-width: none; text-align: center;">Moments Together</h2>
+        <p class="section-lead reveal" style="max-width: none; text-align: center; margin: 0 auto var(--space-4);">
+          Glimpses of their time together through the years.
+        </p>
+
+        <div class="trio-moments-grid">
+          <div class="trio-moment reveal">
+            <img src="assets/Trio/trio1.jpg" alt="The Trio together" loading="lazy">
+          </div>
+          <div class="trio-moment reveal" style="--delay: 40ms">
+            <img src="assets/Trio/trio2.jpg" alt="The Trio together" loading="lazy">
+          </div>
+          <div class="trio-moment reveal" style="--delay: 80ms">
+            <img src="assets/Trio/trio3.jpg" alt="The Trio together" loading="lazy">
+          </div>
+          <div class="trio-moment reveal" style="--delay: 120ms">
+            <img src="assets/Trio/trio4.jpg" alt="The Trio together" loading="lazy">
+          </div>
+          <div class="trio-moment reveal" style="--delay: 160ms">
+            <img src="assets/Trio/trio5.jpg" alt="The Trio together" loading="lazy">
+          </div>
+          <div class="trio-moment reveal" style="--delay: 200ms">
+            <img src="assets/Trio/Trio6.jpg" alt="The Trio together" loading="lazy">
+          </div>
+          <div class="trio-moment reveal" style="--delay: 240ms">
+            <img src="assets/Trio/Trio7.jpg" alt="The Trio together" loading="lazy">
+          </div>
+          <div class="trio-moment reveal" style="--delay: 280ms">
+            <img src="assets/Trio/trio8.jpg" alt="The Trio together" loading="lazy">
+          </div>
+          <div class="trio-moment reveal" style="--delay: 320ms">
+            <img src="assets/Trio/trio9.jpg" alt="The Trio together" loading="lazy">
+          </div>
+          <div class="trio-moment reveal" style="--delay: 360ms">
+            <img src="assets/Trio/TrioHeroImg.jpg" alt="The Trio together" loading="lazy">
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <p class="footer-name">The Trio</p>
+        <p class="footer-field">Esha • Vaidavi • Neha</p>
+      </div>
+
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="#home">Home</a>
+        <a href="#members">Members</a>
+        <a href="#moments">Moments</a>
+      </nav>
+
+      <p class="footer-copy">&copy; 2026 The Trio</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

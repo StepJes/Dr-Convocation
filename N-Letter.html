@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Special Congratulations</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Great+Vibes&display=swap');
+
+:root {
+  --paper: #e8d5af;
+  --paper-light: #f5e8cc;
+  --ink: #513b2b;
+  --gold: #b99a61;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: rgba(185, 154, 97, 0.28);
+}
+
+body {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  overflow-x: hidden;
+  background: radial-gradient(ellipse at 50% 45%, #59432f 0%, #30251e 65%, #1d1713 100%);
+  color: var(--paper-light);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+}
+
+.scene {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.eyebrow {
+  color: var(--gold);
+  font-size: 11px;
+  letter-spacing: 5px;
+  margin-bottom: 15px;
+}
+
+h1 {
+  font-size: clamp(32px, 6vw, 54px);
+  font-weight: 500;
+}
+
+.subtitle {
+  margin-top: 10px;
+  color: #c8b69c;
+  font-size: 17px;
+  font-style: italic;
+}
+
+.envelope-wrapper {
+  width: min(390px, 85vw);
+  height: 250px;
+  margin-top: 65px;
+  perspective: 1000px;
+  position: relative;
+  z-index: 1;
+}
+
+.envelope {
+  position: absolute;
+  inset: 0;
+  filter: drop-shadow(0 25px 24px #0006);
+  transform-style: preserve-3d;
+}
+
+.envelope-back {
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(0deg, transparent, #8c70421a 1px, transparent 3px),
+    linear-gradient(135deg, #d9c195, #eddbb6);
+  border: 1px solid #a58a5d;
+}
+
+.envelope-left,
+.envelope-right,
+.envelope-bottom {
+  position: absolute;
+  inset: 0;
+}
+
+.envelope-left {
+  clip-path: polygon(0 0, 53% 55%, 0 100%);
+  background: linear-gradient(120deg, #ead7b1, #cbb184);
+  z-index: 3;
+}
+
+.envelope-right {
+  clip-path: polygon(100% 0, 47% 55%, 100% 100%);
+  background: linear-gradient(240deg, #d5bd93, #eddbb6);
+  z-index: 3;
+}
+
+.envelope-bottom {
+  clip-path: polygon(0 100%, 50% 47%, 100% 100%);
+  background: linear-gradient(0deg, #d5bd93, #e8d3aa);
+  z-index: 4;
+}
+
+.flap {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 60%;
+  background: linear-gradient(160deg, #e9d6b0, #cdb38a);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  transform-origin: top center;
+  transition: transform .8s ease;
+  z-index: 6;
+}
+
+.wax-seal {
+  position: absolute;
+  top: 44%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 57px;
+  height: 57px;
+  border-radius: 50%;
+  border: 2px solid #8c3d32;
+  background: radial-gradient(circle at 30% 25%, #a64d40, #76251f 65%, #4b1714);
+  color: #e6c789;
+  font-size: 25px;
+  box-shadow: 0 3px 7px #50301c70, inset 0 0 0 3px #a9574a;
+  cursor: pointer;
+  z-index: 7;
+  transition: opacity .3s, transform .3s;
+}
+
+.wax-seal:hover {
+  transform: translate(-50%, -50%) scale(1.08);
+}
+
+/* Short, centered note */
+.letter {
+  position: absolute;
+  left: 5%;
+  bottom: 5%;
+  width: 90%;
+  height: 90%;
+  background:
+    repeating-linear-gradient(0deg, transparent 0, #a58a5d0a 2px, transparent 4px),
+    var(--paper-light);
+  color: var(--ink);
+  z-index: 2;
+  overflow: hidden;
+  border: 1px solid #d0b98f;
+  box-shadow: 0 0 8px #49351e25;
+}
+
+.letter-content {
+  padding: 46px 25px 28px;
+  text-align: center;
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+.letter-date {
+  text-align: right;
+  font-size: 12px;
+  font-style: italic;
+  margin-bottom: 18px;
+}
+
+.letter h2 {
+  font-size: 29px;
+  font-weight: 500;
+  margin-bottom: 14px;
+}
+
+.letter-content p {
+  margin-bottom: 13px;
+}
+
+.letter-content .celebration {
+  color: #896b3d;
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.signature {
+  font-family: 'Great Vibes', cursive;
+  font-size: 38px;
+  margin-top: 6px;
+}
+
+.letter-close {
+  position: absolute;
+  top: 9px;
+  right: 9px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid #cbb184;
+  border-radius: 50%;
+  background: #fdf3dd;
+  color: var(--ink);
+  cursor: pointer;
+  z-index: 10;
+}
+
+.letter-close:hover {
+  background: #efdcb6;
+}
+
+/* Continue link */
+.letter-continue {
+  display: inline-block;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid #ddc9a3;
+  color: var(--ink);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.letter-continue span {
+  display: inline-block;
+  margin-left: 5px;
+  transition: transform .3s;
+}
+
+.letter-continue:hover span {
+  transform: translateX(4px);
+}
+
+/* Theme-based focus feedback (no default blue ring) */
+.wax-seal:focus:not(:focus-visible),
+.open-button:focus:not(:focus-visible),
+.letter-close:focus:not(:focus-visible),
+.letter-continue:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.wax-seal:focus-visible,
+.open-button:focus-visible,
+.letter-close:focus-visible,
+.letter-continue:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+/* Open state */
+.envelope-wrapper.opened .flap {
+  transform: rotateX(180deg);
+  z-index: 1;
+}
+
+.envelope-wrapper.opened .wax-seal {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.envelope-wrapper.opened .letter {
+  top: 50%;
+  left: 50%;
+  bottom: auto;
+  width: min(92vw, 460px);
+  height: auto;
+  max-height: 80vh;
+  overflow-y: auto;
+  z-index: 20;
+  transform: translate(-50%, -50%);
+  animation: letterRise .65s ease .2s both;
+}
+
+.envelope-wrapper.opened .letter-close {
+  display: flex;
+}
+
+@keyframes letterRise {
+  from {
+    opacity: 0;
+    transform: translate(-50%, calc(-50% + 35px));
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* Open button — visible while closed, steps aside once the note is open */
+.open-button {
+  position: relative;
+  z-index: 30;
+  margin-top: 45px;
+  border: 1px solid var(--gold);
+  background: transparent;
+  color: var(--paper-light);
+  padding: 13px 25px;
+  font-family: inherit;
+  font-size: 17px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: background .3s, color .3s, opacity .3s;
+}
+
+.open-button:hover {
+  background: var(--gold);
+  color: #21180f;
+}
+
+.open-button span {
+  margin-right: 8px;
+}
+
+.envelope-wrapper.opened ~ .open-button {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.hint {
+  margin-top: 17px;
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: #a9977c;
+}
+
+@media (max-width: 480px) {
+  .envelope-wrapper {
+    height: 220px;
+    margin-top: 55px;
+  }
+
+  .letter-content {
+    padding: 40px 18px 18px;
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .letter-date {
+    font-size: 11px;
+    margin-bottom: 8px;
+  }
+
+  .letter h2 {
+    font-size: 21px;
+    margin-bottom: 8px;
+  }
+
+  .letter-content p {
+    margin-bottom: 8px;
+  }
+
+  .letter-content .celebration {
+    font-size: 10px;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+  }
+
+  .signature {
+    font-size: 30px;
+    margin-top: 4px;
+  }
+
+  .letter-continue {
+    margin-top: 8px;
+    padding-top: 8px;
+    font-size: 10px;
+  }
+
+  .letter-close {
+    top: 8px;
+    right: 8px;
+    width: 28px;
+    height: 28px;
+  }
+
+  .envelope-wrapper.opened .letter {
+    width: 92vw;
+    max-height: 88vh;
+  }
+
+  .open-button {
+    margin-top: 35px;
+  }
+}
+
+/* Short screens — keep the note readable without inner scrolling */
+@media (max-height: 640px) {
+  .envelope-wrapper {
+    height: 200px;
+    margin-top: 40px;
+  }
+
+  .letter-content {
+    padding: 30px 16px 10px;
+    font-size: 12.5px;
+    line-height: 1.4;
+  }
+
+  .letter-date {
+    font-size: 10px;
+    margin-bottom: 5px;
+  }
+
+  .letter h2 {
+    font-size: 18px;
+    margin-bottom: 5px;
+  }
+
+  .letter-content p {
+    margin-bottom: 5px;
+  }
+
+  .letter-content .celebration {
+    font-size: 9px;
+    margin-bottom: 6px;
+  }
+
+  .signature {
+    font-size: 24px;
+    margin-top: 2px;
+  }
+
+  .letter-continue {
+    margin-top: 5px;
+    padding-top: 5px;
+  }
+
+  .envelope-wrapper.opened .letter {
+    max-height: 92vh;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
+  }
+}
+</style>
+</head>
+
+<body>
+<main class="scene">
+
+  <p class="eyebrow">A SPECIAL MILESTONE</p>
+  <h1>A Letter of Congratulations</h1>
+  <p class="subtitle">Celebrating your journey and the future ahead.</p>
+
+  <div class="envelope-wrapper" id="envelopeWrapper">
+    <div class="envelope">
+
+      <div class="letter" id="letter">
+        <button class="letter-close" id="letterClose" type="button"
+          aria-label="Close the letter">✕</button>
+
+        <div class="letter-content">
+          <p class="letter-date">28th October 2026</p>
+
+          <p class="celebration">A New Chapter Begins</p>
+
+          <h2>Dear Dr. Neha,</h2>
+
+          <p>
+            <strong>Congratulations on completing your BAMS!</strong>
+          </p>
+
+          <p>
+            Years of dedication have brought you to this milestone.
+            May this be the start of a fulfilling journey — heal with
+            knowledge, serve with kindness, and touch every life you meet.
+          </p>
+
+          <p>Celebrate this moment — you've earned it!</p>
+
+          <p class="signoff">Warmest wishes,</p>
+          <!-- TODO: confirm the signer for Neha's letter. -->
+          <p class="signature">Stephen</p>
+
+          <a class="letter-continue" href="NehaGuess.html">
+            Continue <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="envelope-back"></div>
+      <div class="envelope-left"></div>
+      <div class="envelope-right"></div>
+      <div class="envelope-bottom"></div>
+      <div class="flap"></div>
+
+      <button class="wax-seal" id="waxSeal" type="button"
+        aria-label="Open the letter">
+        <span>✦</span>
+      </button>
+    </div>
+  </div>
+
+  <button class="open-button" id="openButton" type="button"
+    aria-expanded="false">
+    <span>✉</span> Open the Letter
+  </button>
+
+  <p class="hint" id="hint">CLICK THE SEAL TO OPEN YOUR NOTE</p>
+</main>
+
+<script>
+const wrapper = document.getElementById("envelopeWrapper");
+const seal = document.getElementById("waxSeal");
+const button = document.getElementById("openButton");
+const hint = document.getElementById("hint");
+const closeBtn = document.getElementById("letterClose");
+
+function toggleEnvelope() {
+  const isOpening = !wrapper.classList.contains("opened");
+
+  wrapper.classList.toggle("opened", isOpening);
+
+  button.innerHTML = isOpening
+    ? "<span>✉</span> Close the Letter"
+    : "<span>✉</span> Open the Letter";
+
+  button.setAttribute("aria-expanded", String(isOpening));
+
+  hint.textContent = isOpening
+    ? "A CELEBRATION OF YOUR ACHIEVEMENT"
+    : "CLICK THE SEAL TO OPEN YOUR NOTE";
+
+  seal.setAttribute(
+    "aria-label",
+    isOpening ? "Letter opened" : "Open the letter"
+  );
+}
+
+seal.addEventListener("click", toggleEnvelope);
+button.addEventListener("click", toggleEnvelope);
+closeBtn.addEventListener("click", toggleEnvelope);
+</script>
+</body>
+</html>
