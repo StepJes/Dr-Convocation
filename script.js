@@ -339,4 +339,86 @@
       window.scrollTo(0, target.getBoundingClientRect().top + window.scrollY - 76);
     });
   }
+
+  /* ------------------------------------------------------------------
+     Floating note (Esha.html, Vaidavi.html and Neha.html)
+
+     Non-modal note: the button toggles it, while Escape or an outside
+     click dismisses it. Focus moves into the note on open and returns to
+     the button when it is dismissed with the keyboard. Trio.html loads
+     this file too, so the whole block is guarded by the presence of the
+     markup.
+     ------------------------------------------------------------------ */
+  var noteFab = document.getElementById("noteFab");
+  var notePopover = document.getElementById("notePopover");
+
+  if (noteFab && notePopover) {
+    var notePaper = notePopover.querySelector(".note-paper");
+
+    function isNoteOpen() {
+      return notePopover.classList.contains("is-open");
+    }
+
+    function openNote() {
+      if (notePaper) {
+        notePaper.scrollTop = 0;
+      }
+
+      notePopover.classList.add("is-open");
+      noteFab.setAttribute("aria-expanded", "true");
+      noteFab.setAttribute("aria-label", "Close note");
+      notePopover.setAttribute("aria-hidden", "false");
+
+      /* Wait for the visibility change to apply before moving focus into the
+         sheet, which also lets arrow keys scroll a long note. */
+      window.requestAnimationFrame(function () {
+        if (isNoteOpen()) {
+          (notePaper || notePopover).focus({ preventScroll: true });
+        }
+      });
+    }
+
+    function closeNote(restoreFocus) {
+      if (!isNoteOpen()) return;
+
+      /* Move focus out before hiding the dialog from assistive tech. This
+         also covers an outside click on a non-focusable area, where focus
+         would otherwise stay on the note. */
+      if (restoreFocus || notePopover.contains(document.activeElement)) {
+        noteFab.focus({ preventScroll: true });
+      }
+
+      notePopover.classList.remove("is-open");
+      noteFab.setAttribute("aria-expanded", "false");
+      noteFab.setAttribute("aria-label", "Open note");
+      notePopover.setAttribute("aria-hidden", "true");
+    }
+
+    noteFab.addEventListener("click", function () {
+      if (isNoteOpen()) {
+        closeNote(false);
+      } else {
+        openNote();
+      }
+    });
+
+    document.addEventListener("click", function (event) {
+      if (
+        isNoteOpen() &&
+        !notePopover.contains(event.target) &&
+        !noteFab.contains(event.target)
+      ) {
+        closeNote(false);
+      }
+    });
+
+    document.addEventListener("keydown", function (event) {
+      if (event.key !== "Escape" || !isNoteOpen()) return;
+
+      /* Let the photo lightbox handle its own Escape first. */
+      if (document.body.classList.contains("lightbox-open")) return;
+
+      closeNote(true);
+    });
+  }
 })();

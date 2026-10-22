@@ -1111,3 +1111,248 @@ body.lightbox-open {
     display: none;
   }
 }
+
+/* ==========================================================================
+   Floating note (Esha.html, Vaidavi.html and Neha.html)
+   ========================================================================== */
+
+/* The round pencil button in the bottom-right corner. Terracotta + gold keeps
+   it tied to the site's CTA colour and the header's double-gold rule. */
+.note-fab {
+  position: fixed;
+  right: clamp(18px, 2.4vw, 30px);
+  bottom: calc(clamp(18px, 2.4vw, 30px) + env(safe-area-inset-bottom, 0px));
+  z-index: 90;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 58px;
+  height: 58px;
+  padding: 0;
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff9ed;
+  box-shadow:
+    0 0 0 3px rgb(251 248 239 / 45%),
+    0 0 0 4px rgb(216 184 124 / 65%),
+    0 12px 28px rgb(30 35 25 / 24%);
+  cursor: pointer;
+  transition:
+    transform 200ms ease,
+    background-color 200ms ease,
+    box-shadow 200ms ease;
+}
+
+.note-fab svg {
+  display: block;
+  width: 22px;
+  height: 22px;
+}
+
+.note-fab:hover {
+  background: #b46a4d;
+  transform: translateY(-3px);
+  box-shadow:
+    0 0 0 3px rgb(251 248 239 / 55%),
+    0 0 0 4px rgb(230 213 169 / 85%),
+    0 16px 34px rgb(30 35 25 / 28%);
+}
+
+.note-fab:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 4px;
+}
+
+/* The wrapper centres the sheet on every screen and owns the open/close
+   animation. Only opacity + transform are animated, so the animation stays
+   on the compositor; visibility is delayed until the fade-out finishes. */
+.note-popover {
+  --note-line: 30px;
+  --note-margin: 34px;
+
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 90;
+  width: min(420px, calc(100vw - 40px));
+  color: var(--ink);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translate3d(-50%, -47%, 0) scale(0.96);
+  transform-origin: center;
+  will-change: opacity, transform;
+  transition:
+    opacity 180ms ease-out,
+    transform 240ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    visibility 0s linear 240ms;
+}
+
+.note-popover.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translate3d(-50%, -50%, 0) scale(1);
+  transition:
+    opacity 180ms ease-out,
+    transform 240ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    visibility 0s;
+}
+
+/* Focus moves into the note on open, so suppress the container focus ring. */
+.note-popover:focus,
+.note-popover:focus-visible,
+.note-paper:focus,
+.note-paper:focus-visible {
+  outline: none;
+}
+
+/* Warm ruled paper: the lines start at the content box, so every line of
+   text sits exactly on a rule. The margin line is a separate background
+   layer anchored to the border box. */
+.note-paper {
+  position: relative;
+  max-height: calc(100vh - 180px);
+  max-height: calc(100dvh - 180px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 34px 26px 26px calc(var(--note-margin) + 10px);
+  border: 1px solid var(--border);
+  background-color: var(--paper-light);
+  background-image:
+    linear-gradient(
+      to right,
+      transparent var(--note-margin),
+      rgb(201 124 93 / 45%) var(--note-margin),
+      rgb(201 124 93 / 45%) calc(var(--note-margin) + 1px),
+      transparent calc(var(--note-margin) + 1px)
+    ),
+    radial-gradient(
+      ellipse at 88% 12%,
+      rgb(145 112 55 / 10%),
+      transparent 40%
+    ),
+    radial-gradient(
+      ellipse at 8% 94%,
+      rgb(130 96 45 / 8%),
+      transparent 40%
+    ),
+    radial-gradient(
+      rgb(110 81 39 / 6%) 0.45px,
+      transparent 0.7px
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent calc(var(--note-line) - 1px),
+      rgb(216 184 124 / 45%) calc(var(--note-line) - 1px),
+      rgb(216 184 124 / 45%) var(--note-line)
+    );
+  background-origin: border-box, border-box, border-box, border-box, content-box;
+  background-size:
+    100% 100%,
+    100% 100%,
+    100% 100%,
+    4px 4px,
+    100% var(--note-line);
+  background-repeat: no-repeat, no-repeat, no-repeat, repeat, repeat;
+  /* The sheet is keyboard-scrollable, but a scrollbar would fight the torn
+     edge, so it stays hidden. */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  /* Dense, irregular edge so the sheet reads as torn paper rather than a
+     card with rounded/wavy corners. Depths are in px so short notes get the
+     same visible tear as tall ones. */
+  clip-path: polygon(
+    0% 5px, 4.2% 4px, 8.3% 2px, 12.5% 9px,
+    16.7% 5px, 20.8% 2px, 25% 9px, 29.2% 7px,
+    33.3% 2px, 37.5% 4px, 41.7% 8px, 45.8% 6px,
+    50% 9px, 54.2% 4px, 58.3% 11px, 62.5% 5px,
+    66.7% 5px, 70.8% 8px, 75% 7px, 79.2% 3px,
+    83.3% 6px, 87.5% 8px, 91.7% 4px, 95.8% 3px,
+    100% 5px, calc(100% - 7px) 7.1%, calc(100% - 4px) 14.3%, calc(100% - 7px) 21.4%,
+    calc(100% - 5px) 28.6%, calc(100% - 3px) 35.7%, calc(100% - 9px) 42.9%, calc(100% - 9px) 50%,
+    calc(100% - 6px) 57.1%, calc(100% - 10px) 64.3%, calc(100% - 7px) 71.4%, calc(100% - 9px) 78.6%,
+    calc(100% - 6px) 85.7%, calc(100% - 3px) 92.9%, calc(100% - 5px) 100%, 95.8% calc(100% - 10px),
+    91.7% calc(100% - 9px), 87.5% calc(100% - 2px), 83.3% calc(100% - 5px), 79.2% calc(100% - 3px),
+    75% calc(100% - 11px), 70.8% calc(100% - 4px), 66.7% calc(100% - 6px), 62.5% calc(100% - 7px),
+    58.3% calc(100% - 3px), 54.2% calc(100% - 8px), 50% calc(100% - 7px), 45.8% calc(100% - 11px),
+    41.7% calc(100% - 4px), 37.5% calc(100% - 9px), 33.3% calc(100% - 6px), 29.2% calc(100% - 10px),
+    25% calc(100% - 5px), 20.8% calc(100% - 3px), 16.7% calc(100% - 6px), 12.5% calc(100% - 9px),
+    8.3% calc(100% - 4px), 4.2% calc(100% - 10px), 0% calc(100% - 6px), 8px 92.9%,
+    6px 85.7%, 6px 78.6%, 3px 71.4%, 5px 64.3%,
+    7px 57.1%, 8px 50%, 3px 42.9%, 3px 35.7%,
+    9px 28.6%, 9px 21.4%, 7px 14.3%, 7px 7.1%
+  );
+
+  /* A light fibre edge plus a close shadow and a long ambient shadow. */
+  filter:
+    drop-shadow(0 1px 0 rgb(255 253 244 / 70%))
+    drop-shadow(0 3px 4px rgb(51 43 26 / 13%))
+    drop-shadow(0 20px 32px rgb(30 35 25 / 28%));
+}
+
+.note-paper::-webkit-scrollbar {
+  display: none;
+}
+
+.note-text {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 0.96rem;
+  letter-spacing: 0.005em;
+  line-height: var(--note-line);
+}
+
+/* Extra paragraphs keep the ruled-paper rhythm by skipping exactly one line. */
+.note-paper p + p {
+  margin-top: var(--note-line);
+}
+
+/* Optional heading style for future page-specific note content. */
+.note-paper h3 {
+  margin: 0;
+  color: var(--primary-dark);
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: var(--note-line);
+}
+
+@media (max-width: 560px) {
+  .note-fab {
+    right: 16px;
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    width: 54px;
+    height: 54px;
+  }
+
+  .note-popover {
+    --note-line: 28px;
+    --note-margin: 30px;
+    width: calc(100vw - 36px);
+  }
+
+  /* Still centred on phones: the capped height leaves room for the fixed
+     header above and the pencil button below. */
+  .note-paper {
+    max-height: calc(100vh - 200px);
+    max-height: calc(100dvh - 200px);
+    padding: 28px 20px 22px calc(var(--note-margin) + 10px);
+  }
+
+  .note-text {
+    font-size: 0.92rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .note-fab,
+  .note-popover {
+    transition: none;
+  }
+}
