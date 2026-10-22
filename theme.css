@@ -3,7 +3,7 @@
    Layered AFTER style.css, which keeps all of the layout/structure.
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Courier+Prime:wght@400;700&family=Source+Sans+3:wght@400;500;600;700&display=swap');
 
 :root {
   --paper: #f4eedf;
@@ -20,6 +20,7 @@
 
   --font-display: 'Cormorant Garamond', Georgia, serif;
   --font-body: 'Source Sans 3', sans-serif;
+  --font-typewriter: 'Courier Prime', 'Courier New', monospace;
 
   --container-width: 1160px;
 }
@@ -1175,7 +1176,7 @@ body.lightbox-open {
   top: 50%;
   left: 50%;
   z-index: 90;
-  width: min(420px, calc(100vw - 40px));
+  width: min(450px, calc(100vw - 40px));
   color: var(--ink);
   opacity: 0;
   visibility: hidden;
@@ -1300,10 +1301,10 @@ body.lightbox-open {
 
 .note-text {
   margin: 0;
-  color: var(--ink);
-  font-family: var(--font-body);
-  font-size: 0.96rem;
-  letter-spacing: 0.005em;
+  color: #1f1a16;
+  font-family: var(--font-typewriter);
+  font-size: 0.9rem;
+  letter-spacing: 0.01em;
   line-height: var(--note-line);
 }
 
@@ -1346,7 +1347,7 @@ body.lightbox-open {
   }
 
   .note-text {
-    font-size: 0.92rem;
+    font-size: 0.86rem;
   }
 }
 
