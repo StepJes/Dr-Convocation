@@ -94,6 +94,19 @@
   transition: transform 550ms ease;
 }
 
+/* Neha's photos have mixed aspect ratios. Let each slide take the width its
+   photo needs at the shared frame height so no horizontal content is cropped. */
+.journey-carousel--natural .journey-slide {
+  flex: 0 0 auto;
+  width: auto;
+}
+
+.journey-carousel--natural .journey-slide img {
+  width: auto;
+  height: 100%;
+  object-fit: contain;
+}
+
 .journey-slide:hover img,
 .journey-slide:focus-visible img {
   transform: scale(1.035);

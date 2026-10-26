@@ -46,12 +46,15 @@
      at the end of the loop, so add more copies only when the measured width
      calls for them. */
   function ensureEnoughCopies() {
-    var slideWidth = originals[0].getBoundingClientRect().width;
-    if (!slideWidth) {
+    /* Slides may keep their photos' natural aspect ratios, so a set is the sum
+       of its actual slide widths rather than one width multiplied by count. */
+    var setWidth = originals.reduce(function (total, slide) {
+      return total + slide.getBoundingClientRect().width;
+    }, 0);
+    if (!setWidth) {
       return;
     }
 
-    var setWidth = slideWidth * originalCount;
     var neededSets = Math.max(2, Math.ceil((carousel.clientWidth + setWidth) / setWidth));
 
     while (currentSets < neededSets) {
