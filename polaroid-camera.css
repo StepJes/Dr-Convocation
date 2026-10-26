@@ -1,0 +1,562 @@
+/* ==========================================================================
+   Polaroid keepsake camera
+   Loaded after style.css + theme.css.
+   Everything is scoped to .polaroid-section (or the body-level photo viewer)
+   so it cannot leak into the rest of the site.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Section shell
+   -------------------------------------------------------------------------- */
+.polaroid-section {
+  position: relative;
+  isolation: isolate;
+  text-align: center;
+  color: var(--paper-light);
+  background:
+    radial-gradient(ellipse at 50% -10%, rgba(216, 184, 124, 0.16), transparent 55%),
+    radial-gradient(circle at 50% 0%, #11382c, var(--primary-dark) 72%);
+  border-top: 4px double var(--gold);
+  border-bottom: 4px double var(--gold);
+}
+
+.polaroid-head {
+  max-width: 46rem;
+  margin-inline: auto;
+}
+
+.polaroid-head .eyebrow {
+  justify-content: center;
+}
+
+.polaroid-head .section-title {
+  max-width: none;
+  color: var(--paper-light);
+}
+
+.polaroid-head .section-title::after {
+  margin-inline: auto;
+}
+
+.polaroid-head .section-lead {
+  margin: 0 auto;
+  color: #dedbc9;
+}
+
+/* Reserves the space the printed photo slides into, so it never covers the
+   instructions or the button below. */
+.polaroid-stage {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+  height: 680px;
+  margin-top: clamp(2.5rem, 6vw, 4rem);
+}
+
+.polaroid-section--landscape .polaroid-stage {
+  height: 620px;
+}
+
+.polaroid-stage .camera-wrap {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.polaroid-foot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  max-width: 34rem;
+  margin-inline: auto;
+}
+
+.polaroid-instructions {
+  color: #cfc9b4;
+}
+
+.polaroid-instructions p:first-child {
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.polaroid-instructions p + p {
+  margin-top: 0.35rem;
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
+  color: #e2dfcf;
+}
+
+/* --------------------------------------------------------------------------
+   2. Camera body
+   -------------------------------------------------------------------------- */
+.polaroid-section .camera {
+  position: relative;
+  flex-shrink: 0;
+  width: min(390px, 88vw);
+  height: 285px;
+  border-radius: 25px 25px 35px 35px;
+  background: linear-gradient(145deg, #fbf9e6, #ded9c0);
+  box-shadow:
+    0 30px 50px rgb(0 0 0 / 45%),
+    inset 0 5px 8px #fff,
+    inset 0 -8px 12px #b7b199;
+  transform: rotate(-3deg);
+  transition: transform 0.4s ease;
+}
+
+.polaroid-section .camera-top {
+  position: absolute;
+  top: -25px;
+  left: 20px;
+  right: 20px;
+  height: 35px;
+  border-radius: 12px 12px 0 0;
+  background: linear-gradient(#f7f4dc, #d8d2b6);
+}
+
+.polaroid-section .viewfinder {
+  position: absolute;
+  top: 16px;
+  left: 27px;
+  width: 53px;
+  height: 25px;
+  border: 5px solid #b6b19b;
+  border-radius: 6px;
+  background: #242a24;
+}
+
+.polaroid-section .flash {
+  position: absolute;
+  top: 16px;
+  right: 95px;
+  width: 38px;
+  height: 24px;
+  border-radius: 5px;
+  background: linear-gradient(135deg, #fff, #d6d2ba);
+  box-shadow: inset 0 0 5px #a5a08a;
+}
+
+.polaroid-section .flash::after {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  background: #fff8cf;
+  border-radius: 3px;
+}
+
+/* Lens */
+.polaroid-section .lens {
+  position: absolute;
+  top: 57px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 132px;
+  height: 132px;
+  border: 8px solid #c9c4ad;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #41443a, #10130f);
+  box-shadow: 0 5px 8px rgb(0 0 0 / 35%), inset 0 0 0 5px #272b24;
+}
+
+.polaroid-section .lens-glass {
+  position: relative;
+  width: 82px;
+  height: 82px;
+  border: 4px solid #545b52;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 35% 30%,
+    #8aa4a2 0%, #334e4a 15%, #101b1a 38%,
+    #07090f 65%, #263f3d 78%, #080a10 100%
+  );
+  box-shadow: inset 0 0 15px #000;
+}
+
+.polaroid-section .lens-glass::after {
+  content: "";
+  position: absolute;
+  top: 14px;
+  left: 17px;
+  width: 20px;
+  height: 9px;
+  border-radius: 50%;
+  background: #ffffffaa;
+  transform: rotate(-35deg);
+  filter: blur(2px);
+}
+
+/* Shutter */
+.polaroid-section .shutter {
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  z-index: 3;
+  width: 43px;
+  height: 18px;
+  padding: 0;
+  border: 0;
+  border-radius: 7px 7px 3px 3px;
+  background: var(--accent);
+  box-shadow: 0 3px 0 #a06a5f;
+  cursor: pointer;
+}
+
+.polaroid-section .shutter:active {
+  transform: translateY(3px);
+  box-shadow: none;
+}
+
+.polaroid-section .brand {
+  position: absolute;
+  bottom: 42px;
+  left: 0;
+  width: 100%;
+  color: #7c7a63;
+  font-family: var(--font-typewriter);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.polaroid-section .photo-slot {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  width: 170px;
+  height: 7px;
+  border-radius: 10px;
+  background: #9c9780;
+  box-shadow: inset 0 2px 4px #4c4a3e;
+  transform: translateX(-50%);
+}
+
+/* --------------------------------------------------------------------------
+   3. Printed Polaroid
+   -------------------------------------------------------------------------- */
+.polaroid-section .polaroid {
+  position: absolute;
+  top: 90px;
+  left: 50%;
+  z-index: 5;
+  width: 230px;
+  padding: 11px 11px 36px;
+  background: #fffefa;
+  box-shadow: 0 15px 35px rgb(0 0 0 / 40%);
+  transform: translate(-50%, 0) scale(0.15);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    transform 1s cubic-bezier(0.2, 0.8, 0.2, 1),
+    opacity 0.5s ease,
+    visibility 0s linear 1s;
+}
+
+.polaroid-section .polaroid img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  object-position: center;
+  background: #e7e5df;
+}
+
+/* Tap-to-reveal cover */
+.polaroid-section .reveal-cover {
+  position: absolute;
+  top: 11px;
+  left: 11px;
+  right: 11px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  aspect-ratio: 3 / 4;
+  background: linear-gradient(135deg, #f3f1e4, #dbd8c8);
+  color: #5a584c;
+  cursor: pointer;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.8s ease, visibility 0s;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.polaroid-section .reveal-cover span {
+  font-family: var(--font-display);
+  font-size: 20px;
+}
+
+.polaroid-section .reveal-cover small {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.polaroid-section .reveal-cover.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.8s ease, visibility 0s linear 0.8s;
+}
+
+.polaroid-section .polaroid-caption {
+  position: absolute;
+  bottom: 9px;
+  left: 0;
+  width: 100%;
+  color: #5a584c;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-style: italic;
+  text-align: center;
+}
+
+/* Slide out */
+.polaroid-section .polaroid.show {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  cursor: pointer;
+  transform: translate(-50%, 220px) rotate(5deg) scale(1);
+  transition:
+    transform 1s cubic-bezier(0.2, 0.8, 0.2, 1),
+    opacity 0.5s ease,
+    visibility 0s;
+}
+
+.polaroid-section .polaroid:focus-visible,
+.polaroid-section .reveal-cover:focus-visible {
+  outline: 2px solid var(--gold-light);
+  outline-offset: 4px;
+}
+
+/* Fade out when clicking outside */
+.polaroid-section .polaroid.fade-out {
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 190px) rotate(5deg) scale(0.92);
+  transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+/* Developing */
+.polaroid-section .polaroid.developing img {
+  animation: polaroid-develop 2.5s ease forwards;
+}
+
+@keyframes polaroid-develop {
+  0% {
+    filter: brightness(0) saturate(0);
+  }
+  45% {
+    filter: brightness(0.4) saturate(0.3);
+  }
+  100% {
+    filter: brightness(1) saturate(1);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   4. Camera flash
+   -------------------------------------------------------------------------- */
+.flash-effect {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #fff;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.flash-effect.fire {
+  animation: camera-flash 0.55s ease-out;
+}
+
+@keyframes camera-flash {
+  0% {
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.95;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   5. Full-screen photo viewer
+   -------------------------------------------------------------------------- */
+.photo-viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 96px 20px 64px;
+  background: rgba(6, 20, 15, 0.92);
+  backdrop-filter: blur(9px);
+  -webkit-backdrop-filter: blur(9px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  overflow-y: auto;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.photo-viewer.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+body.polaroid-viewer-open {
+  overflow: hidden;
+}
+
+.viewer-photo {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: min(88vw, 650px);
+  max-height: 78vh;
+  object-fit: contain;
+  border: 10px solid #fffefa;
+  border-bottom-width: 42px;
+  background: #fffefa;
+  box-shadow: 0 20px 80px rgb(0 0 0 / 60%);
+  cursor: default;
+  transform: scale(0.92);
+  transition: transform 0.3s ease;
+}
+
+.photo-viewer.active .viewer-photo {
+  transform: scale(1);
+}
+
+.close-viewer {
+  position: fixed;
+  top: 20px;
+  right: 22px;
+  z-index: 401;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid rgb(255 255 255 / 55%);
+  border-radius: 50%;
+  background: rgb(255 255 255 / 9%);
+  color: #fff;
+  font-size: 30px;
+  font-weight: 300;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.close-viewer:hover {
+  background: rgb(255 255 255 / 21%);
+  transform: rotate(90deg);
+}
+
+.viewer-hint {
+  position: fixed;
+  bottom: 22px;
+  left: 0;
+  width: 100%;
+  color: #c7c7d2;
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-align: center;
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   6. Landscape variant (used by Trio.html)
+   -------------------------------------------------------------------------- */
+.polaroid-section .polaroid--landscape {
+  width: 280px;
+}
+
+.polaroid-section .polaroid--landscape img,
+.polaroid-section .polaroid--landscape .reveal-cover {
+  aspect-ratio: 4 / 3;
+}
+
+/* --------------------------------------------------------------------------
+   7. Responsive
+   -------------------------------------------------------------------------- */
+@media (max-width: 520px) {
+  .polaroid-stage {
+    height: 620px;
+  }
+
+  .polaroid-section--landscape .polaroid-stage {
+    height: 520px;
+  }
+
+  .polaroid-section .camera {
+    transform: scale(0.9) rotate(-3deg);
+    transform-origin: top center;
+  }
+
+  .polaroid-section .polaroid.show {
+    transform: translate(-50%, 205px) rotate(5deg) scale(0.95);
+  }
+
+  .polaroid-section .polaroid--landscape {
+    width: 240px;
+  }
+
+  .polaroid-section .reveal-cover span {
+    font-size: 17px;
+  }
+
+  .photo-viewer {
+    padding: 80px 14px 56px;
+  }
+
+  .viewer-photo {
+    max-width: 92vw;
+    max-height: 72vh;
+    border-width: 7px;
+    border-bottom-width: 30px;
+  }
+
+  .close-viewer {
+    top: 14px;
+    right: 14px;
+    width: 40px;
+    height: 40px;
+    font-size: 26px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .polaroid-section .camera,
+  .polaroid-section .polaroid,
+  .polaroid-section .reveal-cover,
+  .photo-viewer,
+  .viewer-photo,
+  .close-viewer {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

@@ -12,8 +12,10 @@
    comment the testing line out and uncomment the real countdown.
    ------------------------------------------------------------------ */
 
-// Real countdown: October 28, 2026 at 12:00 AM (visitor's local time).
-const targetDate = new Date(2026, 9, 28, 0, 0, 0).getTime();
+// Real countdown at 12:00 AM (visitor's local time).
+// Esha and Vaidavi: October 28, 2026. Neha: October 29, 2026.
+const isNeha = document.body.dataset.next === "NTransition.html";
+const targetDate = new Date(2026, 9, isNeha ? 29 : 28, 0, 0, 0).getTime();
 
 // Testing (active): the moment is "already here" — finale fires on load.
 // const targetDate = Date.now() - 1000;

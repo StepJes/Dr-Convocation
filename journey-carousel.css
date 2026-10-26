@@ -1,0 +1,264 @@
+/* ==========================================================================
+   THE JOURNEY — CONTINUOUS PHOTO CAROUSEL
+   Loaded after style.css and theme.css. Every selector is namespaced so the
+   existing Moments lightbox and Polaroid viewer keep working untouched.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Section
+   -------------------------------------------------------------------------- */
+.journey-section {
+  position: relative;
+  overflow: hidden;
+  background: var(--paper);
+}
+
+.journey-section .section-lead {
+  margin-bottom: 0;
+}
+
+/* --------------------------------------------------------------------------
+   2. Full-bleed film strip
+   -------------------------------------------------------------------------- */
+.journey-carousel {
+  position: relative;
+  width: 100%;
+  margin-top: clamp(2rem, 4vw, 3rem);
+  overflow-x: auto;
+  overflow-y: hidden;
+  border-block: 4px double var(--gold);
+  background: var(--primary-dark);
+  scroll-snap-type: x proximity;
+  scrollbar-width: thin;
+  scrollbar-color: var(--gold) var(--primary-dark);
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Only switch to the animated, hidden-overflow version once the script has
+   successfully duplicated the strip. Without JS the photos stay scrollable. */
+.journey-carousel.is-ready {
+  overflow: hidden;
+  scrollbar-width: none;
+}
+
+.journey-carousel.is-ready::-webkit-scrollbar {
+  display: none;
+}
+
+.journey-track {
+  display: flex;
+  width: max-content;
+  gap: 0;
+}
+
+.journey-carousel.is-ready .journey-track {
+  animation: journey-marquee var(--journey-duration, 24s) linear infinite;
+  animation-play-state: paused;
+  will-change: transform;
+}
+
+.journey-carousel.is-ready.is-visible .journey-track {
+  animation-play-state: running;
+}
+
+.journey-carousel.is-ready:hover .journey-track,
+.journey-carousel.is-ready:focus-within .journey-track,
+.journey-carousel.is-ready:active .journey-track,
+.journey-carousel.is-ready.is-viewer-open .journey-track {
+  animation-play-state: paused;
+}
+
+.journey-slide {
+  flex: 0 0 240px;
+  width: 240px;
+  height: 300px;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 0;
+  background: var(--primary-dark);
+  color: inherit;
+  cursor: zoom-in;
+  scroll-snap-align: start;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.journey-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 550ms ease;
+}
+
+.journey-slide:hover img,
+.journey-slide:focus-visible img {
+  transform: scale(1.035);
+}
+
+.journey-slide:focus-visible {
+  outline: 3px solid var(--gold-light);
+  outline-offset: -3px;
+}
+
+@keyframes journey-marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(calc(-1 * var(--journey-shift, 50%)));
+  }
+}
+
+/* --------------------------------------------------------------------------
+   3. Full-screen viewer
+   -------------------------------------------------------------------------- */
+.journey-viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 34px;
+  background: rgb(6 20 15 / 96%);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 260ms ease, visibility 0s linear 260ms;
+}
+
+.journey-viewer.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 260ms ease;
+}
+
+body.journey-viewer-open {
+  overflow: hidden;
+}
+
+.journey-viewer-img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: min(92vw, 900px);
+  max-height: 88vh;
+  object-fit: contain;
+  border: 1px solid rgb(210 189 138 / 45%);
+  background: var(--primary-dark);
+  box-shadow: 0 24px 70px rgb(0 0 0 / 55%);
+  transform: scale(0.96);
+  transition: transform 260ms ease;
+  cursor: default;
+}
+
+.journey-viewer.is-open .journey-viewer-img {
+  transform: scale(1);
+}
+
+.journey-viewer-close {
+  position: absolute;
+  top: 22px;
+  right: 24px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 1px solid rgb(210 189 138 / 55%);
+  border-radius: 50%;
+  background: rgb(42 42 42 / 70%);
+  color: var(--paper-light);
+  font: inherit;
+  font-size: 1.9rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 180ms ease, transform 180ms ease;
+}
+
+.journey-viewer-close:hover,
+.journey-viewer-close:focus-visible {
+  background: var(--primary);
+  transform: rotate(90deg);
+}
+
+.journey-viewer-hint {
+  position: absolute;
+  bottom: 22px;
+  left: 0;
+  width: 100%;
+  color: var(--gold-light);
+  font-size: 0.74rem;
+  letter-spacing: 0.18em;
+  text-align: center;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   4. Responsive
+   -------------------------------------------------------------------------- */
+@media (max-width: 600px) {
+  .journey-slide {
+    flex-basis: 200px;
+    width: 200px;
+    height: 250px;
+  }
+
+  .journey-viewer {
+    padding: 20px;
+  }
+
+  .journey-viewer-img {
+    max-width: 94vw;
+    max-height: 82vh;
+  }
+
+  .journey-viewer-close {
+    top: 14px;
+    right: 14px;
+    width: 42px;
+    height: 42px;
+    font-size: 1.7rem;
+  }
+
+  .journey-viewer-hint {
+    bottom: 14px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   5. Reduced motion — no marquee, just a scrollable strip
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .journey-carousel,
+  .journey-carousel.is-ready {
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .journey-carousel .journey-track,
+  .journey-carousel.is-ready .journey-track {
+    animation: none !important;
+  }
+
+  .journey-slide img {
+    transition: none;
+  }
+
+  .journey-viewer,
+  .journey-viewer-img,
+  .journey-viewer-close {
+    transition-duration: 0.01ms !important;
+  }
+}

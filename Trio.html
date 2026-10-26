@@ -9,6 +9,7 @@
   <meta name="theme-color" content="#172f25">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="polaroid-camera.css">
   <style>
     .trio-hero-banner {
       position: relative;
@@ -217,6 +218,8 @@
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
 
+  <div class="flash-effect" id="flashEffect" aria-hidden="true"></div>
+
   <header class="site-header" id="site-header">
     <nav class="nav container" aria-label="Primary">
       <a class="nav-brand">The Trio</a>
@@ -302,6 +305,75 @@
       </div>
     </section>
 
+    <!-- POLAROID KEEPSAKE -->
+    <section class="section polaroid-section polaroid-section--landscape" id="keepsake">
+      <div class="container">
+        <div class="polaroid-head">
+          <p class="eyebrow reveal">A Little Memory</p>
+          <h2 class="section-title reveal" style="max-width: none;">Take a Memory Home</h2>
+          <p class="section-lead reveal">
+            Press the shutter for a little trio keepsake.
+          </p>
+        </div>
+      </div>
+
+      <div class="polaroid-stage">
+        <div class="camera-wrap" id="cameraWrap">
+          <div class="camera" id="camera">
+            <div class="camera-top"></div>
+            <div class="viewfinder"></div>
+            <div class="flash"></div>
+
+            <button
+              class="shutter"
+              id="shutter"
+              type="button"
+              aria-label="Take a photograph"
+              title="Take a picture">
+            </button>
+
+            <div class="lens">
+              <div class="lens-glass"></div>
+            </div>
+
+            <div class="brand">MAKING HAPPY MOMENTS</div>
+            <div class="photo-slot"></div>
+
+            <div class="polaroid polaroid--landscape" id="polaroid" role="button" tabindex="0" aria-label="Enlarge photograph">
+              <img
+                id="photo"
+                src="assets/Trio/TrioPolaroid.png"
+                alt="A Polaroid memory of Esha, Vaidavi and Neha"
+                decoding="async"
+                fetchpriority="low">
+
+              <div
+                class="reveal-cover"
+                id="revealCover"
+                role="button"
+                tabindex="0"
+                aria-label="Tap to reveal the photo">
+                <span>Tap to reveal ♡</span>
+                <small>a little surprise</small>
+              </div>
+
+              <div class="polaroid-caption">The Trio ♡</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="polaroid-foot">
+          <div class="polaroid-instructions">
+            <p>Every picture tells a story</p>
+            <p>Press the shutter and discover a little surprise.</p>
+          </div>
+          <button id="captureBtn" class="btn btn-ghost" type="button">✦ Take a picture</button>
+        </div>
+      </div>
+    </section>
+
     <!-- MOMENTS -->
     <section class="trio-moments" id="moments">
       <div class="container">
@@ -347,6 +419,32 @@
     </section>
   </main>
 
+  <!-- POLAROID PHOTO VIEWER -->
+  <div
+    class="photo-viewer"
+    id="photoViewer"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Enlarged photograph"
+    aria-hidden="true">
+
+    <button
+      class="close-viewer"
+      id="closeViewer"
+      type="button"
+      aria-label="Close enlarged photo"
+      title="Close">
+      &times;
+    </button>
+
+    <img
+      class="viewer-photo"
+      id="viewerPhoto"
+      alt="Enlarged Polaroid photograph">
+
+    <p class="viewer-hint">CLICK OUTSIDE TO CLOSE</p>
+  </div>
+
   <footer class="site-footer">
     <div class="container footer-grid">
       <div class="footer-brand">
@@ -365,6 +463,7 @@
   </footer>
 
   <script src="script.js"></script>
+  <script src="polaroid-camera.js"></script>
 </body>
 
 </html>

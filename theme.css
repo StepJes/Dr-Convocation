@@ -6,17 +6,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Courier+Prime:wght@400;700&family=Source+Sans+3:wght@400;500;600;700&display=swap');
 
 :root {
-  --paper: #f4eedf;
-  --paper-light: #fbf8ef;
-  --paper-dark: #e6dbc2;
-  --ink: #2f2a24;
-  --primary: #4f4f4f;
-  --primary-dark: #2a2a2a;
-  --accent: #c97c5d;
-  --gold: #d8b87c;
-  --gold-light: #e6d5a9;
-  --muted: #7f7666;
-  --border: #d8c9ab;
+  --paper: #F7F4D5;
+  --paper-light: #fbf9e6;
+  --paper-dark: #f0ebd0;
+  --ink: #0A3323;
+  --primary: #0A3323;
+  --primary-dark: #062017;
+  --accent: #D3968C;
+  --gold: #839958;
+  --gold-light: #a3b376;
+  --muted: #105666;
+  --border: rgba(131, 153, 88, 0.5);
 
   --font-display: 'Cormorant Garamond', Georgia, serif;
   --font-body: 'Source Sans 3', sans-serif;
@@ -255,12 +255,12 @@ h3,
 
 .btn-primary {
   background: var(--accent);
-  color: #fff9ed;
+  color: #F7F4D5;
   border: 1px solid var(--accent);
 }
 
 .btn-primary:hover {
-  background: #b46a4d;
+  background: #c07e71;
 }
 
 .btn-ghost {
@@ -380,14 +380,14 @@ h3,
 
 .tag-upcoming {
   color: var(--accent);
-  background: #f0e4d6;
-  border: 1px solid #d7b8a4;
+  background: #f0ecd3;
+  border: 1px solid rgba(163, 179, 118, 0.6);
   padding: 4px 10px;
 }
 
 .progression-strip {
   border: 1px solid var(--border);
-  background: #eee5d2;
+  background: #f0ecd3;
   /* The base rule only sets a top border; the theme turns it into a full
      box, so it needs its own padding or the items touch the edges. */
   padding: 1.1rem 1.25rem;
@@ -1301,7 +1301,7 @@ body.lightbox-open {
 
 .note-text {
   margin: 0;
-  color: #1f1a16;
+  color: #0A3323;
   font-family: var(--font-typewriter);
   font-size: 0.9rem;
   letter-spacing: 0.01em;
