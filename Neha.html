@@ -448,30 +448,30 @@
 
 
           <li class="moment reveal">
-            <div class="moment-frame">
+            <figure class="moment-reel">
               <video src="assets/Neha/2amDuty.mp4" controls playsinline preload="metadata"></video>
-            </div>
+            </figure>
             <p class="moment-label">2 AM duty</p>
           </li>
 
           <li class="moment reveal" style="--delay: 40ms">
-            <div class="moment-frame">
+            <figure class="moment-reel">
               <video src="assets/Neha/Duty.mp4" controls playsinline preload="metadata"></video>
-            </div>
+            </figure>
             <p class="moment-label">Duty moments</p>
           </li>
 
           <li class="moment reveal" style="--delay: 80ms">
-            <div class="moment-frame">
+            <figure class="moment-reel">
               <video src="assets/Neha/NeverBacksdownFromChallenge.mp4" controls playsinline preload="metadata"></video>
-            </div>
+            </figure>
             <p class="moment-label">Never backs down</p>
           </li>
 
           <li class="moment reveal">
-            <div class="moment-frame">
+            <figure class="moment-reel">
               <video src="assets/Neha/Dance.mp4" controls playsinline preload="metadata"></video>
-            </div>
+            </figure>
             <p class="moment-label">Off duty</p>
           </li>
         </ul>
@@ -1003,67 +1003,43 @@
 
   <style>
     /* Neha mobile responsiveness */
-    @media (max-width: 1024px) {
-      .nav-toggle {
-        display: inline-flex;
-      }
-      .nav-menu {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        flex-direction: column;
-        align-items: stretch;
-        background: rgba(10, 51, 35, 0.98);
-        backdrop-filter: blur(12px);
-        border-bottom: 1px solid rgba(247, 244, 213, 0.12);
-        padding: 0.75rem 0;
-        gap: 0;
-        display: none;
-        box-shadow: 0 20px 40px rgba(6, 20, 15, 0.4);
-      }
-      .nav-menu.is-open {
-        display: flex;
-      }
-      .nav-links {
-        flex-direction: column;
-        width: 100%;
-        gap: 0;
-      }
-      .nav-links li {
-        width: 100%;
-      }
-      .nav-links a {
-        display: block;
-        width: 100%;
-        padding: 0.75rem clamp(1.25rem, 6vw, 2.5rem);
-      }
-      .nav-cta {
-        align-self: flex-start;
-        margin: 0.5rem clamp(1.25rem, 6vw, 2.5rem) 0;
-      }
+
+    /* Moments videos - match Trio style */
+    .moment-reel {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 9 / 16;
+      margin: 0;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #0b1512;
+      box-shadow: 0 18px 40px rgba(10, 51, 35, 0.18);
+    }
+
+    .moment-reel video {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      cursor: pointer;
     }
 
     @media (max-width: 680px) {
+      html {
+        scroll-padding-top: 90px;
+      }
       .hero-grid {
         grid-template-columns: 1fr;
         gap: clamp(1.75rem, 6vw, 2.5rem);
-        text-align: center;
       }
       .hero-content {
-        align-items: center;
-      }
-      .hero-text,
-      .hero-subtitle {
-        margin-inline: auto;
-      }
-      .hero-actions {
-        justify-content: center;
-        flex-wrap: wrap;
+        text-align: left;
+        max-width: none;
       }
       .hero-figure {
         order: -1;
-        max-width: min(380px, 88vw);
+        justify-self: center;
+        width: min(100%, 420px);
         margin: 0 auto;
       }
 
@@ -1089,15 +1065,21 @@
         height: auto;
         display: block;
       }
-      .moment-frame video {
+      .moment-reel {
+        width: 100%;
+        max-width: 320px;
+        margin-inline: auto;
+      }
+      .moment-reel video {
         width: 100%;
         height: 100%;
         display: block;
-        aspect-ratio: 3/4;
+        aspect-ratio: 9 / 16;
         object-fit: cover;
       }
       .moment-label {
         font-size: 0.95rem;
+        text-align: center;
       }
 
       .content-head {
@@ -1151,7 +1133,10 @@
       .content-card {
         padding: clamp(1.25rem, 6vw, 1.75rem);
       }
-      .moment-frame video {
+      .moment-reel {
+        max-width: min(300px, 88vw);
+      }
+      .moment-reel video {
         aspect-ratio: 9/16;
       }
     }
