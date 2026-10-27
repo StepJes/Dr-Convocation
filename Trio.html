@@ -524,31 +524,31 @@
           Each with their own dreams, united by an unshakeable bond.
         </p>
 
-        <div class="trio-gallery">
-          <article class="trio-member reveal">
-            <div class="trio-member-frame">
-              <img src="assets/Esha/EshaCariature.jpg" alt="Dr. Esha Mugutmal caricature" class="trio-member-photo">
-            </div>
-            <h3 class="trio-member-name">Dr. Esha Mugutmal</h3>
-            <p class="trio-member-role">Gynaecology</p>
-          </article>
-
-          <article class="trio-member reveal" style="--delay: 80ms">
-            <div class="trio-member-frame">
-              <img src="assets/Vaidavi/VaidaviCariature.jpg" alt="Dr. Vaidavi Savale caricature" class="trio-member-photo">
-            </div>
-            <h3 class="trio-member-name">Dr. Vaidavi Savale</h3>
-            <p class="trio-member-role">Pharmacognosy</p>
-          </article>
-
-          <article class="trio-member reveal" style="--delay: 160ms">
-            <div class="trio-member-frame">
-              <img src="assets/Neha/NehaCariature.jpg" alt="Dr. Neha Kharotia caricature" class="trio-member-photo">
-            </div>
-            <h3 class="trio-member-name">Dr. Neha Kharotia</h3>
-            <p class="trio-member-role">BAMS</p>
-          </article>
-        </div>
+        <div class="trio-gallery" id="trioGallery"></div>
+        <script>
+          (function() {
+            const members = [
+              { name: 'Dr. Esha Mugutmal', role: 'Gynaecology', img: 'assets/Esha/EshaCariature.jpg', alt: 'Dr. Esha Mugutmal caricature', delay: 0 },
+              { name: 'Dr. Vaidavi Savale', role: 'Pharmacognosy', img: 'assets/Vaidavi/VaidaviCariature.jpg', alt: 'Dr. Vaidavi Savale caricature', delay: 80 },
+              { name: 'Dr. Neha Kharotia', role: 'BAMS', img: 'assets/Neha/NehaCariature.jpg', alt: 'Dr. Neha Kharotia caricature', delay: 160 }
+            ];
+            const gallery = document.getElementById('trioGallery');
+            if (!gallery) return;
+            members.forEach(m => {
+              const article = document.createElement('article');
+              article.className = 'trio-member reveal';
+              if (m.delay) article.style.setProperty('--delay', m.delay + 'ms');
+              article.innerHTML = `
+                <div class="trio-member-frame">
+                  <img src="${m.img}" alt="${m.alt}" class="trio-member-photo">
+                </div>
+                <h3 class="trio-member-name">${m.name}</h3>
+                <p class="trio-member-role">${m.role}</p>
+              `;
+              gallery.appendChild(article);
+            });
+          })();
+        </script>
       </div>
     </section>
 
@@ -616,7 +616,7 @@
             <p>Every picture tells a story</p>
             <p>Press the shutter and discover a little surprise.</p>
           </div>
-          <button id="captureBtn" class="btn btn-ghost" type="button">✦ Take a picture</button>
+          <button id="captureBtn" class="btn btn-primary" type="button">✦ Take a picture</button>
         </div>
       </div>
     </section>
@@ -630,38 +630,24 @@
           Glimpses of their time together through the years.
         </p>
 
-        <div class="trio-moments-grid">
-          <div class="trio-moment reveal">
-            <img src="assets/Trio/trio1.jpg" alt="The Trio together" loading="lazy">
-          </div>
-          <div class="trio-moment reveal" style="--delay: 40ms">
-            <img src="assets/Trio/trio2.jpg" alt="The Trio together" loading="lazy">
-          </div>
-          <div class="trio-moment reveal" style="--delay: 80ms">
-            <img src="assets/Trio/trio3.jpg" alt="The Trio together" loading="lazy">
-          </div>
-          <div class="trio-moment reveal" style="--delay: 120ms">
-            <img src="assets/Trio/trio4.jpg" alt="The Trio together" loading="lazy">
-          </div>
-          <div class="trio-moment reveal" style="--delay: 160ms">
-            <img src="assets/Trio/trio5.jpg" alt="The Trio together" loading="lazy">
-          </div>
-          <div class="trio-moment reveal" style="--delay: 200ms">
-            <img src="assets/Trio/Trio6.jpg" alt="The Trio together" loading="lazy">
-          </div>
-          <div class="trio-moment reveal" style="--delay: 240ms">
-            <img src="assets/Trio/Trio7.jpg" alt="The Trio together" loading="lazy">
-          </div>
-          <div class="trio-moment reveal" style="--delay: 280ms">
-            <img src="assets/Trio/trio8.jpg" alt="The Trio together" loading="lazy">
-          </div>
-          <div class="trio-moment reveal" style="--delay: 320ms">
-            <img src="assets/Trio/trio9.jpg" alt="The Trio together" loading="lazy">
-          </div>
-          <div class="trio-moment reveal" style="--delay: 360ms">
-            <img src="assets/Trio/TrioHeroImg.jpg" alt="The Trio together" loading="lazy">
-          </div>
-        </div>
+        <div class="trio-moments-grid" id="trioMomentsGrid"></div>
+        <script>
+          (function() {
+            const moments = [
+              'trio1.jpg', 'trio2.jpg', 'trio3.jpg', 'trio4.jpg', 'trio5.jpg',
+              'Trio6.jpg', 'Trio7.jpg', 'trio8.jpg', 'trio9.jpg', 'TrioHeroImg.jpg'
+            ];
+            const grid = document.getElementById('trioMomentsGrid');
+            if (!grid) return;
+            moments.forEach((src, i) => {
+              const div = document.createElement('div');
+              div.className = 'trio-moment reveal';
+              if (i > 0) div.style.setProperty('--delay', (i * 40) + 'ms');
+              div.innerHTML = `<img src="assets/Trio/${src}" alt="The Trio together" loading="lazy">`;
+              grid.appendChild(div);
+            });
+          })();
+        </script>
       </div>
     </section>
 
@@ -671,108 +657,37 @@
         <h2 class="reveal" id="purse-vibes-title">Why this bag color??? ✨</h2>
         <p class="subtitle reveal" style="--delay: 60ms">Tap a purse to discover your personality according to me</p>
 
-        <div class="purse-container reveal" style="--delay: 120ms">
-
-          <!-- Pink Purse -->
-          <div class="purse-item">
-            <div class="toast pink-toast" id="toast-pink" role="status">
-              <h3>🎀 Girly Girl</h3>
-              <p>Sweet, feminine and dreamy. Pink bows, cute outfits and all things pretty!</p>
-            </div>
-
-            <button class="purse-circle pink"
-              type="button"
-              data-purse="pink"
-              aria-label="Pink purse"
-              aria-pressed="false">
-
-              <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-                <path class="bag-handle"
-                  d="M15 19 V14 A9 9 0 0 1 33 14 V19"
-                  fill="none" stroke-width="2.5"
-                  stroke-linecap="round"/>
-
-                <path class="bag-body"
-                  d="M9 18 H39 L42 40 H6 Z"
-                  stroke-width="1.5"
-                  stroke-linejoin="round"/>
-
-                <rect class="bag-detail"
-                  x="21" y="26" width="6" height="5"
-                  rx="1"/>
-              </svg>
-            </button>
-
-            <p class="purse-label">Pink</p>
-          </div>
-
-          <!-- Maroon Purse -->
-          <div class="purse-item">
-            <div class="toast maroon-toast" id="toast-maroon" role="status">
-              <h3>🔥 The Baddie</h3>
-              <p>Bold, fierce and confident. You love statement looks and powerful energy!</p>
-            </div>
-
-            <button class="purse-circle maroon"
-              type="button"
-              data-purse="maroon"
-              aria-label="Maroon purse"
-              aria-pressed="false">
-
-              <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-                <path class="bag-handle"
-                  d="M15 19 V14 A9 9 0 0 1 33 14 V19"
-                  fill="none" stroke-width="2.5"
-                  stroke-linecap="round"/>
-
-                <path class="bag-body"
-                  d="M9 18 H39 L42 40 H6 Z"
-                  stroke-width="1.5"
-                  stroke-linejoin="round"/>
-
-                <rect class="bag-detail"
-                  x="21" y="26" width="6" height="5"
-                  rx="1"/>
-              </svg>
-            </button>
-
-            <p class="purse-label">Maroon</p>
-          </div>
-
-          <!-- Black Purse -->
-          <div class="purse-item">
-            <div class="toast black-toast" id="toast-black" role="status">
-              <h3>🖤 Girly Baddie</h3>
-              <p>Soft meets savage. A little feminine charm mixed with bold, edgy confidence!</p>
-            </div>
-
-            <button class="purse-circle black"
-              type="button"
-              data-purse="black"
-              aria-label="Black purse"
-              aria-pressed="false">
-
-              <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-                <path class="bag-handle"
-                  d="M15 19 V14 A9 9 0 0 1 33 14 V19"
-                  fill="none" stroke-width="2.5"
-                  stroke-linecap="round"/>
-
-                <path class="bag-body"
-                  d="M9 18 H39 L42 40 H6 Z"
-                  stroke-width="1.5"
-                  stroke-linejoin="round"/>
-
-                <rect class="bag-detail"
-                  x="21" y="26" width="6" height="5"
-                  rx="1"/>
-              </svg>
-            </button>
-
-            <p class="purse-label">Black</p>
-          </div>
-
-        </div>
+        <div class="purse-container reveal" style="--delay: 120ms" id="purseContainer"></div>
+        <script>
+          (function() {
+            const purses = [
+              { color: 'pink', label: 'Pink', emoji: '🎀', title: 'Girly Girl', desc: 'Sweet, feminine and dreamy. Pink bows, cute outfits and all things pretty!' },
+              { color: 'maroon', label: 'Maroon', emoji: '🔥', title: 'The Baddie', desc: 'Bold, fierce and confident. You love statement looks and powerful energy!' },
+              { color: 'black', label: 'Black', emoji: '🖤', title: 'Girly Baddie', desc: 'Soft meets savage. A little feminine charm mixed with bold, edgy confidence!' }
+            ];
+            const container = document.getElementById('purseContainer');
+            if (!container) return;
+            purses.forEach(p => {
+              const item = document.createElement('div');
+              item.className = 'purse-item';
+              item.innerHTML = `
+                <div class="toast ${p.color}-toast" id="toast-${p.color}" role="status">
+                  <h3>${p.emoji} ${p.title}</h3>
+                  <p>${p.desc}</p>
+                </div>
+                <button class="purse-circle ${p.color}" type="button" data-purse="${p.color}" aria-label="${p.label} purse" aria-pressed="false">
+                  <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                    <path class="bag-handle" d="M15 19 V14 A9 9 0 0 1 33 14 V19" fill="none" stroke-width="2.5" stroke-linecap="round"/>
+                    <path class="bag-body" d="M9 18 H39 L42 40 H6 Z" stroke-width="1.5" stroke-linejoin="round"/>
+                    <rect class="bag-detail" x="21" y="26" width="6" height="5" rx="1"/>
+                  </svg>
+                </button>
+                <p class="purse-label">${p.label}</p>
+              `;
+              container.appendChild(item);
+            });
+          })();
+        </script>
       </div>
     </section>
   </main>
