@@ -459,6 +459,221 @@
         transition: none;
       }
     }
+
+    /* ------------------------------------------------------------------
+       Moments in Motion — reels inside #moments.
+       ------------------------------------------------------------------ */
+
+    .trio-motion {
+      margin-top: clamp(2.75rem, 6vw, 4.5rem);
+      padding-top: clamp(2rem, 4vw, 3rem);
+      border-top: 1px solid var(--color-line-soft);
+    }
+
+    .trio-motion .eyebrow {
+      justify-content: center;
+    }
+
+    .trio-motion-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 1.2rem + 1vw, 2.125rem);
+      color: var(--primary-dark);
+      text-align: center;
+      margin-bottom: var(--space-1);
+    }
+
+    .trio-motion-lead {
+      color: var(--muted);
+      font-size: var(--text-base);
+      text-align: center;
+    }
+
+    .trio-reel-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: var(--space-4);
+      margin-top: var(--space-4);
+    }
+
+    .trio-reel {
+      position: relative;
+      flex: 0 1 calc((100% - 2 * var(--space-4)) / 3);
+      max-width: 300px;
+      aspect-ratio: 9 / 16;
+      margin: 0;
+      border: 1px solid var(--color-line);
+      border-radius: 18px;
+      overflow: hidden;
+      background: #0b1512;
+      box-shadow: var(--shadow-md);
+    }
+
+    .trio-reel video {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      cursor: pointer;
+      transition: transform 620ms var(--ease-out);
+    }
+
+    /* Soft scrim so the caption always reads over the footage. */
+    .trio-reel::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0;
+      height: 46%;
+      background: linear-gradient(to top, rgba(6, 20, 15, 0.74), rgba(6, 20, 15, 0));
+      pointer-events: none;
+    }
+
+    .trio-reel-caption {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 14px;
+      z-index: 1;
+      padding-inline: 14px;
+      font-family: var(--font-display);
+      font-size: 1rem;
+      letter-spacing: 0.02em;
+      color: var(--paper-light);
+      text-align: center;
+      text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
+    }
+
+    .trio-reel-btn {
+      position: absolute;
+      z-index: 2;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      padding: 0;
+      border: 1px solid rgba(251, 249, 230, 0.42);
+      border-radius: 50%;
+      background: rgba(6, 20, 15, 0.5);
+      -webkit-backdrop-filter: blur(6px);
+      backdrop-filter: blur(6px);
+      color: var(--paper-light);
+      cursor: pointer;
+      transition: background var(--transition-fast),
+                  opacity var(--transition-fast);
+    }
+
+    .trio-reel-btn:hover {
+      background: rgba(6, 20, 15, 0.74);
+    }
+
+    .trio-reel-btn:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 3px;
+    }
+
+    .trio-reel-btn svg {
+      width: 18px;
+      height: 18px;
+      pointer-events: none;
+    }
+
+    .trio-reel-sound {
+      top: 12px;
+      right: 12px;
+    }
+
+    .trio-reel-sound .icon-sound {
+      display: none;
+    }
+
+    .trio-reel-sound[aria-pressed="true"] .icon-muted {
+      display: none;
+    }
+
+    .trio-reel-sound[aria-pressed="true"] .icon-sound {
+      display: block;
+    }
+
+    .trio-reel-play {
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 52px;
+      height: 52px;
+      opacity: 0;
+      transition: opacity var(--transition-fast),
+                  background var(--transition-fast);
+    }
+
+    .trio-reel-play svg {
+      width: 20px;
+      height: 20px;
+      margin-left: 2px;
+    }
+
+    .trio-reel-play .icon-pause {
+      display: none;
+      margin-left: 0;
+    }
+
+    .trio-reel.is-playing .icon-play {
+      display: none;
+    }
+
+    .trio-reel.is-playing .icon-pause {
+      display: block;
+    }
+
+    /* Hidden while playing, but still reachable by keyboard: it comes back on
+       hover or focus, and tapping the clip itself pauses as well. */
+    .trio-reel:not(.is-playing) .trio-reel-play,
+    .trio-reel:hover .trio-reel-play,
+    .trio-reel-play:focus-visible {
+      opacity: 1;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .trio-reel:hover video {
+        transform: scale(1.03);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .trio-reel-row {
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        overflow-x: auto;
+        overscroll-behavior-x: contain;
+        scroll-snap-type: x mandatory;
+        scroll-padding-inline: 2px;
+        padding-inline: 2px;
+        padding-bottom: var(--space-1);
+        scrollbar-width: none;
+      }
+
+      .trio-reel-row::-webkit-scrollbar {
+        display: none;
+      }
+
+      .trio-reel {
+        flex: 0 0 clamp(210px, 70vw, 280px);
+        max-width: none;
+        scroll-snap-align: start;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .trio-reel video,
+      .trio-reel-btn,
+      .trio-reel-play {
+        transition: none;
+      }
+
+      .trio-reel:hover video {
+        transform: none;
+      }
+    }
   </style>
 </head>
 
@@ -634,20 +849,143 @@
         <script>
           (function() {
             const moments = [
-              'trio1.jpg', 'trio2.jpg', 'trio3.jpg', 'trio4.jpg', 'trio5.jpg',
-              'Trio6.jpg', 'Trio7.jpg', 'trio8.jpg', 'trio9.jpg', 'TrioHeroImg.jpg'
+              { src: 'trio1.jpg', w: 1203, h: 1601 },
+              { src: 'trio2.jpg', w: 1208, h: 1603 },
+              { src: 'trio3.jpg', w: 1203, h: 1587 },
+              { src: 'trio4.jpg', w: 1224, h: 1144 },
+              { src: 'trio5.jpg', w: 1943, h: 1083 },
+              { src: 'Trio6.jpg', w: 1224, h: 639 },
+              { src: 'Trio7.jpg', w: 552, h: 809 },
+              { src: 'trio8.jpg', w: 1224, h: 1341 },
+              { src: 'trio9.jpg', w: 1224, h: 798 },
+              { src: 'TrioHeroImg.jpg', w: 1224, h: 958 },
+              { src: 'Trio10.jpg', w: 720, h: 1280 },
+              { src: 'Trio11.jpg', w: 720, h: 1280 }
             ];
             const grid = document.getElementById('trioMomentsGrid');
             if (!grid) return;
-            moments.forEach((src, i) => {
+            moments.forEach((moment, i) => {
               const div = document.createElement('div');
               div.className = 'trio-moment reveal';
               if (i > 0) div.style.setProperty('--delay', (i * 40) + 'ms');
-              div.innerHTML = `<img src="assets/Trio/${src}" alt="The Trio together" loading="lazy">`;
+              div.innerHTML = `<img src="assets/Trio/${moment.src}" width="${moment.w}" height="${moment.h}" alt="The Trio together" loading="lazy">`;
               grid.appendChild(div);
             });
           })();
         </script>
+
+        <!-- MOMENTS IN MOTION -->
+        <div class="trio-motion" id="moments-in-motion">
+          <p class="eyebrow reveal">In Motion</p>
+          <h3 class="trio-motion-title reveal">Moments in Motion</h3>
+          <p class="trio-motion-lead reveal">A few clips caught between the photographs.</p>
+
+          <div class="trio-reel-row" id="trioReelRow">
+
+            <figure class="trio-reel reveal">
+              <video muted loop playsinline preload="metadata"
+                     data-src="assets/Trio/TrioBecomingSenior.mp4"
+                     aria-label="The Trio — becoming seniors"></video>
+
+              <button class="trio-reel-btn trio-reel-sound" type="button"
+                      aria-label="Unmute video" aria-pressed="false">
+                <svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+                     aria-hidden="true" focusable="false">
+                  <path d="M4 9h3l4-3v12l-4-3H4z"/>
+                  <path d="M16 9l4 6M20 9l-4 6"/>
+                </svg>
+                <svg class="icon-sound" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+                     aria-hidden="true" focusable="false">
+                  <path d="M4 9h3l4-3v12l-4-3H4z"/>
+                  <path d="M16 8.5a5 5 0 0 1 0 7"/>
+                  <path d="M18.5 6a8.5 8.5 0 0 1 0 12"/>
+                </svg>
+              </button>
+
+              <button class="trio-reel-btn trio-reel-play" type="button" aria-label="Play video">
+                <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                  <path d="M8 5.5v13l11-6.5z"/>
+                </svg>
+                <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                  <path d="M8 5h3v14H8zM13 5h3v14h-3z"/>
+                </svg>
+              </button>
+
+              <figcaption class="trio-reel-caption">Becoming Seniors</figcaption>
+            </figure>
+
+            <figure class="trio-reel reveal" style="--delay: 80ms">
+              <video muted loop playsinline preload="metadata"
+                     data-src="assets/Trio/TrioSeptember.mp4"
+                     aria-label="The Trio — September"></video>
+
+              <button class="trio-reel-btn trio-reel-sound" type="button"
+                      aria-label="Unmute video" aria-pressed="false">
+                <svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+                     aria-hidden="true" focusable="false">
+                  <path d="M4 9h3l4-3v12l-4-3H4z"/>
+                  <path d="M16 9l4 6M20 9l-4 6"/>
+                </svg>
+                <svg class="icon-sound" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+                     aria-hidden="true" focusable="false">
+                  <path d="M4 9h3l4-3v12l-4-3H4z"/>
+                  <path d="M16 8.5a5 5 0 0 1 0 7"/>
+                  <path d="M18.5 6a8.5 8.5 0 0 1 0 12"/>
+                </svg>
+              </button>
+
+              <button class="trio-reel-btn trio-reel-play" type="button" aria-label="Play video">
+                <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                  <path d="M8 5.5v13l11-6.5z"/>
+                </svg>
+                <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                  <path d="M8 5h3v14H8zM13 5h3v14h-3z"/>
+                </svg>
+              </button>
+
+              <figcaption class="trio-reel-caption">September</figcaption>
+            </figure>
+
+            <figure class="trio-reel reveal" style="--delay: 160ms">
+              <video muted loop playsinline preload="metadata"
+                     data-src="assets/Trio/TrioOuting.mp4"
+                     aria-label="The Trio — the outing"></video>
+
+              <button class="trio-reel-btn trio-reel-sound" type="button"
+                      aria-label="Unmute video" aria-pressed="false">
+                <svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+                     aria-hidden="true" focusable="false">
+                  <path d="M4 9h3l4-3v12l-4-3H4z"/>
+                  <path d="M16 9l4 6M20 9l-4 6"/>
+                </svg>
+                <svg class="icon-sound" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+                     aria-hidden="true" focusable="false">
+                  <path d="M4 9h3l4-3v12l-4-3H4z"/>
+                  <path d="M16 8.5a5 5 0 0 1 0 7"/>
+                  <path d="M18.5 6a8.5 8.5 0 0 1 0 12"/>
+                </svg>
+              </button>
+
+              <button class="trio-reel-btn trio-reel-play" type="button" aria-label="Play video">
+                <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                  <path d="M8 5.5v13l11-6.5z"/>
+                </svg>
+                <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                  <path d="M8 5h3v14H8zM13 5h3v14h-3z"/>
+                </svg>
+              </button>
+
+              <figcaption class="trio-reel-caption">The Outing</figcaption>
+            </figure>
+
+          </div>
+        </div>
       </div>
     </section>
 
@@ -784,6 +1122,181 @@
         if (event.key === "Escape") {
           closeAll();
         }
+      });
+    })();
+  </script>
+
+  <script>
+    /* Moments in Motion — reels inside #moments.
+       Footage is only fetched once the row approaches the viewport, plays
+       while visible, pauses when it leaves, and only one reel carries sound. */
+    (function () {
+      var row = document.getElementById("trioReelRow");
+      if (!row) return;
+
+      var cards = Array.prototype.slice.call(row.querySelectorAll(".trio-reel"));
+      var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+      function videoOf(card) {
+        return card.querySelector("video");
+      }
+
+      function load(card) {
+        var video = videoOf(card);
+        if (!video || video.getAttribute("src")) return;
+        // Assigning src starts loading on its own; calling load() here would
+        // abort the play() request made in the same observer callback.
+        video.src = video.getAttribute("data-src");
+      }
+
+      function play(card) {
+        var video = videoOf(card);
+        if (!video || !video.getAttribute("src")) return;
+        var attempt = video.play();
+        if (attempt && typeof attempt.catch === "function") {
+          attempt.catch(function () {});
+        }
+      }
+
+      function pause(card) {
+        var video = videoOf(card);
+        if (video && !video.paused) {
+          video.pause();
+        }
+      }
+
+      function mute(card) {
+        var video = videoOf(card);
+        var btn = card.querySelector(".trio-reel-sound");
+        if (!video || video.muted) return;
+        video.muted = true;
+        if (btn) {
+          btn.setAttribute("aria-pressed", "false");
+          btn.setAttribute("aria-label", "Unmute video");
+        }
+      }
+
+      cards.forEach(function (card) {
+        var video = videoOf(card);
+        if (!video) return;
+
+        var playBtn = card.querySelector(".trio-reel-play");
+
+        video.addEventListener("play", function () {
+          card.classList.add("is-playing");
+          if (playBtn) playBtn.setAttribute("aria-label", "Pause video");
+        });
+
+        video.addEventListener("pause", function () {
+          card.classList.remove("is-playing");
+          if (playBtn) playBtn.setAttribute("aria-label", "Play video");
+        });
+
+        // Tap the clip itself to pause or resume.
+        video.addEventListener("click", function () {
+          if (video.paused) {
+            load(card);
+            play(card);
+          } else {
+            video.pause();
+          }
+        });
+      });
+
+      // How much of the card is on screen right now. IntersectionObserver
+      // entries can arrive out of order in some engines, so the play/pause
+      // decision uses live geometry rather than entry.isIntersecting.
+      function visibilityRatio(card) {
+        var rect = card.getBoundingClientRect();
+        if (!rect.width || !rect.height) return 0;
+        var viewportW = window.innerWidth || document.documentElement.clientWidth;
+        var viewportH = window.innerHeight || document.documentElement.clientHeight;
+        var visibleW = Math.max(0, Math.min(rect.right, viewportW) - Math.max(rect.left, 0));
+        var visibleH = Math.max(0, Math.min(rect.bottom, viewportH) - Math.max(rect.top, 0));
+        return (visibleW * visibleH) / (rect.width * rect.height);
+      }
+
+      function isRowVisible() {
+        var rect = row.getBoundingClientRect();
+        var viewportH = window.innerHeight || document.documentElement.clientHeight;
+        return rect.bottom > 0 && rect.top < viewportH;
+      }
+
+      function sync(card) {
+        if (visibilityRatio(card) < 0.4) {
+          pause(card);
+          return;
+        }
+        load(card);
+        if (!reduceMotion.matches) {
+          play(card);
+        }
+      }
+
+      if ("IntersectionObserver" in window) {
+        // A single observer both loads and plays, so a reel can never be
+        // asked to play before its source has been assigned.
+        var player = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            sync(entry.target);
+          });
+        }, { threshold: 0.4 });
+
+        // Cards that sit outside the horizontal scroller on phones never
+        // cross the card threshold, so the row gets its own observer to stop
+        // them when the whole block leaves the viewport.
+        var rowObserver = new IntersectionObserver(function () {
+          if (!isRowVisible()) {
+            cards.forEach(pause);
+            // Do not bring sound back when the block is scrolled into view
+            // again; the viewer can unmute deliberately.
+            cards.forEach(mute);
+            return;
+          }
+          cards.forEach(sync);
+        }, { threshold: 0.01 });
+
+        cards.forEach(function (card) {
+          player.observe(card);
+        });
+        rowObserver.observe(row);
+      } else {
+        cards.forEach(load);
+      }
+
+      // Sound buttons: unmute one reel, re-mute the other two.
+      row.addEventListener("click", function (event) {
+        var playBtn = event.target.closest(".trio-reel-play");
+        if (playBtn) {
+          var playCard = playBtn.closest(".trio-reel");
+          var playVideo = videoOf(playCard);
+          if (playVideo && !playVideo.paused) {
+            playVideo.pause();
+          } else {
+            load(playCard);
+            play(playCard);
+          }
+          return;
+        }
+
+        var soundBtn = event.target.closest(".trio-reel-sound");
+        if (!soundBtn) return;
+
+        var owner = soundBtn.closest(".trio-reel");
+        var video = videoOf(owner);
+        if (!video) return;
+
+        var willUnmute = video.muted;
+
+        cards.forEach(function (card) {
+          var other = videoOf(card);
+          var otherBtn = card.querySelector(".trio-reel-sound");
+          if (!other || !otherBtn) return;
+
+          other.muted = card === owner ? !willUnmute : true;
+          otherBtn.setAttribute("aria-pressed", other.muted ? "false" : "true");
+          otherBtn.setAttribute("aria-label", other.muted ? "Unmute video" : "Mute video");
+        });
       });
     })();
   </script>
