@@ -212,6 +212,253 @@
         column-count: 1;
       }
     }
+
+    /* ------------------------------------------------------------------
+       Purse Vibes — Trio page only.
+       Every rule is scoped to .purse-section so nothing leaks into the
+       shared styles (no bare *, body, h2 or .pink / .maroon / .black).
+       ------------------------------------------------------------------ */
+
+    .purse-section {
+      text-align: center;
+      background-color: var(--paper-light);
+      border-block: 1px solid var(--color-line-soft);
+    }
+
+    .purse-section h2 {
+      font-family: Georgia, "Cormorant Garamond", serif;
+      font-size: clamp(1.6rem, 1.15rem + 1.6vw, 2.25rem);
+      letter-spacing: -0.01em;
+      color: #422c35;
+      margin-bottom: var(--space-2);
+    }
+
+    .purse-section .subtitle {
+      color: #a17b8b;
+      font-size: 0.85rem;
+      letter-spacing: 0.02em;
+      margin-bottom: clamp(2.75rem, 7vw, 4rem);
+    }
+
+    .purse-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 35px;
+    }
+
+    .purse-item {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .purse-circle {
+      width: 85px;
+      height: 85px;
+      padding: 0;
+      border: 2px solid transparent;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      transition: transform 0.25s ease,
+                  box-shadow 0.25s ease,
+                  outline-color 0.25s ease;
+    }
+
+    .purse-circle:hover {
+      transform: translateY(4px) scale(1.05);
+    }
+
+    .purse-circle.active {
+      border-color: #ffffff;
+      outline: 2px solid currentColor;
+      transform: translateY(4px);
+    }
+
+    .purse-circle.pink {
+      background: #f8c5d8;
+      color: #c84e83;
+    }
+
+    .purse-circle.maroon {
+      background: #a96b7b;
+      color: #a96b7b;
+    }
+
+    .purse-circle.black {
+      background: #625963;
+      color: #29252c;
+    }
+
+    .purse-circle svg {
+      width: 43px;
+      height: 43px;
+      display: block;
+      overflow: visible;
+    }
+
+    .purse-circle svg .bag-handle {
+      fill: none;
+      stroke: #fcebf1;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+    }
+
+    .purse-circle svg .bag-body {
+      stroke: #fcebf1;
+      stroke-width: 1.5;
+      stroke-linejoin: round;
+    }
+
+    .purse-circle.pink svg .bag-body {
+      fill: #c84e83;
+    }
+
+    .purse-circle.maroon svg .bag-body {
+      fill: #713744;
+    }
+
+    .purse-circle.black svg .bag-body {
+      fill: #29252c;
+    }
+
+    .purse-circle svg .bag-detail {
+      fill: #fcebf1;
+      stroke: #fcebf1;
+      stroke-width: 1;
+    }
+
+    .purse-label {
+      margin-top: 14px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: #5f4a54;
+    }
+
+    .purse-section .toast {
+      position: absolute;
+      bottom: 135px;
+      left: 50%;
+      transform: translateX(-50%) translateY(8px);
+      width: 190px;
+      padding: 15px 13px;
+      background: #ffffff;
+      border-radius: 14px;
+      box-shadow: 0 8px 28px rgba(64, 32, 44, 0.13);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.25s ease,
+                  transform 0.25s ease,
+                  visibility 0.25s ease;
+      z-index: 2;
+    }
+
+    .purse-section .toast::after {
+      content: "";
+      position: absolute;
+      bottom: -7px;
+      left: 50%;
+      transform: translateX(-50%) rotate(45deg);
+      width: 14px;
+      height: 14px;
+      background: #ffffff;
+    }
+
+    .purse-section .toast.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .purse-section .toast h3 {
+      font-family: Georgia, "Cormorant Garamond", serif;
+      font-size: 1.05rem;
+      margin-bottom: 7px;
+    }
+
+    .purse-section .toast p {
+      font-size: 0.75rem;
+      line-height: 1.5;
+      color: #7b6871;
+    }
+
+    .purse-section .pink-toast h3 {
+      color: #d75d91;
+    }
+
+    .purse-section .maroon-toast h3 {
+      color: #713744;
+    }
+
+    .purse-section .black-toast h3 {
+      color: #29252c;
+    }
+
+    .purse-circle:focus-visible {
+      outline: 3px solid #b46c8a;
+      outline-offset: 4px;
+    }
+
+    @media (max-width: 420px) {
+      .purse-container {
+        gap: 20px;
+      }
+
+      .purse-circle {
+        width: 72px;
+        height: 72px;
+      }
+
+      .purse-circle svg {
+        width: 38px;
+        height: 38px;
+      }
+
+      .purse-section .toast {
+        width: 150px;
+        padding: 12px 10px;
+      }
+
+      .purse-section .toast h3 {
+        font-size: 0.95rem;
+      }
+
+      .purse-section .toast p {
+        font-size: 0.6875rem;
+      }
+
+      /* Nudge the outer popups inward on very narrow phones so they
+         never spill past the viewport edge; the caret follows the purse. */
+      .purse-item:first-child .toast {
+        left: calc(50% + 26px);
+      }
+
+      .purse-item:last-child .toast {
+        left: calc(50% - 26px);
+      }
+
+      .purse-item:first-child .toast::after {
+        left: calc(50% - 26px);
+      }
+
+      .purse-item:last-child .toast::after {
+        left: calc(50% + 26px);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .purse-circle,
+      .purse-section .toast {
+        transition: none;
+      }
+    }
   </style>
 </head>
 
@@ -417,6 +664,117 @@
         </div>
       </div>
     </section>
+
+    <!-- PURSE VIBES -->
+    <section class="section purse-section" id="purse-vibes" aria-labelledby="purse-vibes-title">
+      <div class="container">
+        <h2 class="reveal" id="purse-vibes-title">Why this bag color??? ✨</h2>
+        <p class="subtitle reveal" style="--delay: 60ms">Tap a purse to discover your personality according to me</p>
+
+        <div class="purse-container reveal" style="--delay: 120ms">
+
+          <!-- Pink Purse -->
+          <div class="purse-item">
+            <div class="toast pink-toast" id="toast-pink" role="status">
+              <h3>🎀 Girly Girl</h3>
+              <p>Sweet, feminine and dreamy. Pink bows, cute outfits and all things pretty!</p>
+            </div>
+
+            <button class="purse-circle pink"
+              type="button"
+              data-purse="pink"
+              aria-label="Pink purse"
+              aria-pressed="false">
+
+              <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                <path class="bag-handle"
+                  d="M15 19 V14 A9 9 0 0 1 33 14 V19"
+                  fill="none" stroke-width="2.5"
+                  stroke-linecap="round"/>
+
+                <path class="bag-body"
+                  d="M9 18 H39 L42 40 H6 Z"
+                  stroke-width="1.5"
+                  stroke-linejoin="round"/>
+
+                <rect class="bag-detail"
+                  x="21" y="26" width="6" height="5"
+                  rx="1"/>
+              </svg>
+            </button>
+
+            <p class="purse-label">Pink</p>
+          </div>
+
+          <!-- Maroon Purse -->
+          <div class="purse-item">
+            <div class="toast maroon-toast" id="toast-maroon" role="status">
+              <h3>🔥 The Baddie</h3>
+              <p>Bold, fierce and confident. You love statement looks and powerful energy!</p>
+            </div>
+
+            <button class="purse-circle maroon"
+              type="button"
+              data-purse="maroon"
+              aria-label="Maroon purse"
+              aria-pressed="false">
+
+              <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                <path class="bag-handle"
+                  d="M15 19 V14 A9 9 0 0 1 33 14 V19"
+                  fill="none" stroke-width="2.5"
+                  stroke-linecap="round"/>
+
+                <path class="bag-body"
+                  d="M9 18 H39 L42 40 H6 Z"
+                  stroke-width="1.5"
+                  stroke-linejoin="round"/>
+
+                <rect class="bag-detail"
+                  x="21" y="26" width="6" height="5"
+                  rx="1"/>
+              </svg>
+            </button>
+
+            <p class="purse-label">Maroon</p>
+          </div>
+
+          <!-- Black Purse -->
+          <div class="purse-item">
+            <div class="toast black-toast" id="toast-black" role="status">
+              <h3>🖤 Girly Baddie</h3>
+              <p>Soft meets savage. A little feminine charm mixed with bold, edgy confidence!</p>
+            </div>
+
+            <button class="purse-circle black"
+              type="button"
+              data-purse="black"
+              aria-label="Black purse"
+              aria-pressed="false">
+
+              <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                <path class="bag-handle"
+                  d="M15 19 V14 A9 9 0 0 1 33 14 V19"
+                  fill="none" stroke-width="2.5"
+                  stroke-linecap="round"/>
+
+                <path class="bag-body"
+                  d="M9 18 H39 L42 40 H6 Z"
+                  stroke-width="1.5"
+                  stroke-linejoin="round"/>
+
+                <rect class="bag-detail"
+                  x="21" y="26" width="6" height="5"
+                  rx="1"/>
+              </svg>
+            </button>
+
+            <p class="purse-label">Black</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
   </main>
 
   <!-- POLAROID PHOTO VIEWER -->
@@ -464,6 +822,56 @@
 
   <script src="script.js"></script>
   <script src="polaroid-camera.js"></script>
+  <script>
+    /* Purse Vibes — scoped to the Trio page section only. */
+    (function () {
+      var section = document.getElementById("purse-vibes");
+      if (!section) return;
+
+      var toasts = Array.prototype.slice.call(section.querySelectorAll(".toast"));
+      var purses = Array.prototype.slice.call(section.querySelectorAll(".purse-circle"));
+
+      function closeAll() {
+        toasts.forEach(function (toast) {
+          toast.classList.remove("show");
+        });
+        purses.forEach(function (purse) {
+          purse.classList.remove("active");
+          purse.setAttribute("aria-pressed", "false");
+        });
+      }
+
+      function openPurse(color) {
+        closeAll();
+
+        var toast = section.querySelector("#toast-" + color);
+        var purse = section.querySelector('.purse-circle[data-purse="' + color + '"]');
+        if (!toast || !purse) return;
+
+        toast.classList.add("show");
+        purse.classList.add("active");
+        purse.setAttribute("aria-pressed", "true");
+      }
+
+      section.addEventListener("click", function (event) {
+        var purse = event.target.closest(".purse-circle");
+        if (!purse) return;
+        openPurse(purse.getAttribute("data-purse"));
+      });
+
+      document.addEventListener("click", function (event) {
+        if (!event.target.closest(".purse-item")) {
+          closeAll();
+        }
+      });
+
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+          closeAll();
+        }
+      });
+    })();
+  </script>
 </body>
 
 </html>
