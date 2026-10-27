@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Dr. Neha Kharotia | BAMS</title>
   <meta name="description" content="Dr. Neha Kharotia — BAMS medical professional who graduated on October 28, 2026; HSC at U.S. English Academy High School and Jr. College, BAMS at Muniyal Institute of Ayurveda and Medical Sciences, Manipal, and internship at Poddar.">
-  <meta name="theme-color" content="#172f25">
+  <meta name="theme-color" content="#6B7556">
   <meta property="og:type" content="profile">
   <meta property="og:title" content="Dr. Neha Kharotia | BAMS">
   <meta property="og:description" content="BAMS medical professional — Manipal to Mumbai, and graduation on October 28, 2026. Whatever she chooses next, she'll rock it.">
@@ -539,7 +539,7 @@
           Together with Esha &amp; Vaidavi — a bond built through the journey
         </p>
         <div class="reveal">
-          <a href="Trio.html" class="btn btn-primary" style="background: #d63333; border-color: #d63333;">See Esha, Vaidavi &amp; Neha Together</a>
+          <a href="Trio.html" class="btn btn-primary" style="background: var(--antique-rose); border-color: var(--antique-rose);">See Esha, Vaidavi &amp; Neha Together</a>
         </div>
       </div>
     </section>
@@ -757,6 +757,110 @@
       </p>
     </div>
   </div>
+
+  <!-- FLOATING BAG & NOTE IMAGE -->
+  <button
+    class="floating-bag"
+    id="imagePopupBtn"
+    aria-label="Open bag and note image"
+    title="View image"
+    type="button"
+  >
+    <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+      <path d="M5 11h15l1.5 16H3.5L5 11Z" />
+      <path d="M9 11V8a3.5 3.5 0 0 1 7 0v3" />
+      <path d="M19 4h6l4 4v15h-7" fill="none" />
+      <path d="M25 4v5h4" />
+      <path d="M21 13h5M21 17h5M21 21h3" />
+    </svg>
+  </button>
+
+  <!-- IMAGE POPUP -->
+  <div class="image-popup" id="imagePopup">
+    <div class="popup-content">
+      <button class="close-btn" id="closeImagePopup" aria-label="Close popup" type="button">&times;</button>
+      <img src="assets/Neha/NNote.jpg" alt="Bag and note image" />
+    </div>
+  </div>
+
+  <style>
+    .image-popup {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      background: rgba(0, 0, 0, 0.65);
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .image-popup.show {
+      display: flex;
+    }
+    .popup-content {
+      position: relative;
+      max-width: 90vw;
+      max-height: 85vh;
+      background: #F7F4D5;
+      padding: 8px;
+      border-radius: 12px;
+      animation: popupIn 0.25s ease;
+    }
+    .popup-content img {
+      display: block;
+      max-width: 100%;
+      max-height: 80vh;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+    .close-btn {
+      position: absolute;
+      top: -14px;
+      right: -14px;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 50%;
+      background: #F7F4D5;
+      color: #0A3323;
+      font-size: 27px;
+      line-height: 1;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    }
+    .close-btn:hover {
+      background: #f0ecd3;
+    }
+    @keyframes popupIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
+
+  <script>
+    (function () {
+      const openBtn = document.getElementById("imagePopupBtn");
+      const closeBtn = document.getElementById("closeImagePopup");
+      const popup = document.getElementById("imagePopup");
+      if (!openBtn || !closeBtn || !popup) return;
+      openBtn.addEventListener("click", function () {
+        popup.classList.add("show");
+      });
+      closeBtn.addEventListener("click", function () {
+        popup.classList.remove("show");
+      });
+      popup.addEventListener("click", function (event) {
+        if (event.target === popup) {
+          popup.classList.remove("show");
+        }
+      });
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape" && popup.classList.contains("show")) {
+          popup.classList.remove("show");
+        }
+      });
+    })();
+  </script>
 
   <script src="script.js"></script>
   <script src="polaroid-camera.js"></script>

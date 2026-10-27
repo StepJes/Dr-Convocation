@@ -6,17 +6,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Courier+Prime:wght@400;700&family=Source+Sans+3:wght@400;500;600;700&display=swap');
 
 :root {
-  --paper: #F7F4D5;
-  --paper-light: #fbf9e6;
-  --paper-dark: #f0ebd0;
-  --ink: #0A3323;
-  --primary: #0A3323;
-  --primary-dark: #062017;
-  --accent: #D3968C;
-  --gold: #839958;
-  --gold-light: #a3b376;
-  --muted: #105666;
-  --border: rgba(131, 153, 88, 0.5);
+  /* New color palette */
+  --blush: #F0C4CB;
+  --antique-rose: #C87D87;
+  --champagne: #FBEAD6;
+  --dried-thyme: #6B7556;
+  --bisque: #E5BCA9;
+  
+  /* Mapped to theme variables */
+  --paper: var(--champagne);
+  --paper-light: #fff7ed;
+  --paper-dark: var(--bisque);
+  --ink: #3a2f2f;
+  --primary: var(--dried-thyme);
+  --primary-dark: #4a5239;
+  --accent: var(--antique-rose);
+  --gold: var(--dried-thyme);
+  --gold-light: #7d8566;
+  --muted: #6b5d5d;
+  --border: rgba(107, 117, 86, 0.4);
+  --burgundy: var(--antique-rose);
 
   --font-display: 'Cormorant Garamond', Georgia, serif;
   --font-body: 'Source Sans 3', sans-serif;
@@ -74,14 +83,14 @@ body {
 /* Navigation */
 
 .site-header {
-  background: var(--primary-dark);
-  color: var(--paper-light);
-  border-bottom: 3px double var(--gold);
-  box-shadow: 0 5px 18px rgb(30 35 25 / 12%);
+  background: var(--dried-thyme);
+  color: var(--champagne);
+  border-bottom: 3px double var(--blush);
+  box-shadow: 0 5px 18px rgba(58, 47, 47, 0.12);
 }
 
 .nav-brand {
-  color: var(--paper-light);
+  color: var(--champagne);
   font-family: var(--font-display);
   font-size: 1.65rem;
   font-weight: 700;
@@ -89,7 +98,7 @@ body {
 }
 
 .nav-link {
-  color: #e8dfc9;
+  color: var(--champagne);
   font-size: 0.91rem;
   letter-spacing: 0.035em;
   transition: color 180ms ease;
@@ -97,20 +106,21 @@ body {
 
 .nav-link:hover,
 .nav-link:focus-visible {
-  color: var(--gold-light);
+  color: var(--blush);
 }
 
 .nav-link::after {
-  background: var(--gold-light);
+  background: var(--blush);
 }
 
 .nav-cta {
-  border-color: var(--gold);
-  color: var(--paper-light);
+  border-color: var(--blush);
+  color: var(--champagne);
+  background: var(--antique-rose);
 }
 
 .nav-toggle-bar {
-  background: var(--paper-light);
+  background: var(--champagne);
 }
 
 /* Typography */
@@ -158,10 +168,10 @@ h3,
 
 .hero {
   overflow: hidden;
-  color: var(--paper-light);
+  color: var(--ink);
   background:
-    radial-gradient(ellipse at 85% 15%, rgb(216 184 124 / 14%), transparent 42%),
-    var(--primary-dark);
+    radial-gradient(ellipse at 85% 15%, rgba(240, 196, 203, 0.25), transparent 42%),
+    var(--champagne);
   border-bottom: 5px double var(--gold);
 }
 
@@ -178,29 +188,29 @@ h3,
 }
 
 .hero-title {
-  color: var(--paper-light);
+  color: var(--ink);
   font-size: clamp(3.4rem, 7vw, 6.3rem);
   line-height: 0.99;
 }
 
 .hero-subtitle {
-  color: var(--gold-light);
+  color: var(--antique-rose);
   font-family: var(--font-display);
   font-size: clamp(1.7rem, 3vw, 2.5rem);
   font-style: italic;
 }
 
 .hero .eyebrow {
-  color: var(--gold-light);
+  color: var(--antique-rose);
 }
 
 .hero .hero-text {
-  color: #e6e3d5;
+  color: var(--ink);
   max-width: 560px;
 }
 
 .hero-text-secondary {
-  opacity: 0.82;
+  opacity: 0.9;
   font-size: 0.96rem;
 }
 
@@ -254,23 +264,23 @@ h3,
 }
 
 .btn-primary {
-  background: var(--accent);
-  color: #F7F4D5;
-  border: 1px solid var(--accent);
+  background: var(--antique-rose);
+  color: #fff;
+  border: 1px solid var(--antique-rose);
 }
 
 .btn-primary:hover {
-  background: #c07e71;
+  background: #b86b74;
 }
 
 .btn-ghost {
-  border: 1px solid var(--gold-light);
-  color: var(--paper-light);
+  border: 1px solid var(--antique-rose);
+  color: var(--ink);
   background: transparent;
 }
 
 .btn-ghost:hover {
-  background: rgb(255 255 255 / 8%);
+  background: rgba(200, 125, 135, 0.1);
 }
 
 .scroll-cue-label {
@@ -510,10 +520,10 @@ h3,
 .milestone {
   padding: clamp(80px, 10vw, 140px) 0;
   text-align: center;
-  color: var(--paper-light);
-  background: var(--primary-dark);
-  border-top: 4px double var(--gold);
-  border-bottom: 4px double var(--gold);
+  color: var(--champagne);
+  background: var(--dried-thyme);
+  border-top: 4px double var(--blush);
+  border-bottom: 4px double var(--blush);
 }
 
 /* NOTE: style.css already draws the inset frame with .milestone::after —
@@ -521,31 +531,31 @@ h3,
    border. Removed; the base frame is the one that stays. */
 
 .milestone-label {
-  color: var(--gold-light);
+  color: var(--blush);
   letter-spacing: 0.2em;
   text-transform: uppercase;
 }
 
 .milestone-date {
-  color: var(--gold-light);
+  color: var(--blush);
   font-family: var(--font-display);
   font-size: clamp(2.5rem, 6vw, 4.8rem);
   line-height: 1.1;
 }
 
 .milestone-title {
-  color: var(--paper-light);
+  color: var(--champagne);
   font-size: clamp(2.6rem, 5vw, 4.4rem);
 }
 
 .milestone-text {
   max-width: 720px;
   margin-inline: auto;
-  color: #e0dfd1;
+  color: var(--champagne);
 }
 
 .milestone-note {
-  color: var(--gold-light);
+  color: var(--blush);
   font-family: var(--font-display);
   font-size: 1.25rem;
   font-style: italic;
@@ -579,31 +589,31 @@ h3,
 }
 
 .site-footer {
-  color: var(--paper-light);
-  background: var(--primary-dark);
-  border-top: 3px double var(--gold);
+  color: var(--champagne);
+  background: var(--dried-thyme);
+  border-top: 3px double var(--blush);
 }
 
 .footer-name {
-  color: var(--paper-light);
+  color: var(--champagne);
   font-family: var(--font-display);
   font-size: 1.6rem;
   font-weight: 700;
 }
 
 .footer-field {
-  color: var(--gold-light);
+  color: var(--blush);
   font-family: var(--font-display);
   font-style: italic;
 }
 
 .footer-nav a,
 .footer-copy {
-  color: #d9d4c5;
+  color: var(--champagne);
 }
 
 .footer-nav a:hover {
-  color: var(--gold-light);
+  color: var(--blush);
 }
 
 /* Accessibility */
@@ -661,9 +671,9 @@ html {
    including after scrolling, where the base rules make it light. */
 .site-header,
 .site-header.is-scrolled {
-  background: var(--primary-dark);
-  border-bottom-color: rgba(230, 213, 169, 0.35);
-  box-shadow: 0 5px 18px rgb(30 35 25 / 18%);
+  background: var(--dried-thyme);
+  border-bottom-color: rgba(240, 196, 203, 0.5);
+  box-shadow: 0 5px 18px rgba(58, 47, 47, 0.18%);
 }
 
 .skip-link {
@@ -1165,6 +1175,49 @@ body.lightbox-open {
   outline-offset: 4px;
 }
 
+/* Floating bag + note icon above the note button */
+.floating-bag {
+  position: fixed;
+  right: clamp(18px, 2.4vw, 30px);
+  bottom: calc(clamp(18px, 2.4vw, 30px) + 70px + env(safe-area-inset-bottom, 0px));
+  width: 58px;
+  height: 58px;
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  background: var(--primary);
+  color: #F7F4D5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 90;
+  box-shadow:
+    0 0 0 3px rgb(251 248 239 / 45%),
+    0 0 0 4px rgb(131 153 88 / 65%),
+    0 12px 28px rgb(30 35 25 / 24%);
+  transition: transform 200ms ease, background-color 200ms ease, box-shadow 200ms ease;
+}
+
+.floating-bag:hover {
+  transform: translateY(-3px);
+  background: var(--primary-dark);
+  box-shadow:
+    0 0 0 3px rgb(251 248 239 / 55%),
+    0 0 0 4px rgb(163 179 118 / 85%),
+    0 16px 34px rgb(30 35 25 / 28%);
+}
+
+.floating-bag:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 4px;
+}
+
+.floating-bag svg {
+  width: 30px;
+  height: 30px;
+  display: block;
+}
+
 /* The wrapper centres the sheet on every screen and owns the open/close
    animation. Only opacity + transform are animated, so the animation stays
    on the compositor; visibility is delayed until the fade-out finishes. */
@@ -1336,6 +1389,18 @@ body.lightbox-open {
     --note-line: 28px;
     --note-margin: 30px;
     width: calc(100vw - 36px);
+  }
+
+  .floating-bag {
+    right: 16px;
+    bottom: calc(16px + 64px + env(safe-area-inset-bottom, 0px));
+    width: 54px;
+    height: 54px;
+  }
+
+  .floating-bag svg {
+    width: 28px;
+    height: 28px;
   }
 
   /* Still centred on phones: the capped height leaves room for the fixed
